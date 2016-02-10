@@ -10,6 +10,7 @@ import unirest
 from FlowrouteNumbersLib.APIHelper import APIHelper
 from FlowrouteNumbersLib.Configuration import Configuration
 from FlowrouteNumbersLib.APIException import APIException
+from FlowrouteNumbersLib.CustomAuthUtility import CustomAuthUtility
 
 
 class TelephoneNumbersController(object):
@@ -60,10 +61,12 @@ class TelephoneNumbersController(object):
         }
 
         #append custom auth authorization
-        CustomAuthUtility.appendCustomAuthParams(headers)
+        #CustomAuthUtility.appendCustomAuthParams(headers)
 
         # Prepare and invoke the API call request to fetch the response
-        response = unirest.get(query_url, headers=headers)
+        #response = unirest.get(query_url, headers=headers)
+        response = CustomAuthUtility.appendCustomAuthParams(method='GET',
+            query_url=query_url, headers=headers)
 
         # Error handling using HTTP status codes
         if response.code == 400:
@@ -122,12 +125,17 @@ class TelephoneNumbersController(object):
             "content-type": "application/json; charset=utf-8",
 
         }
+        # Quick kwargs setting
+        #body = '{"billing_method": "%s"}' % billing
+        body = APIHelper.json_serialize(billing)
 
         #append custom auth authorization
-        CustomAuthUtility.appendCustomAuthParams(headers)
+        #CustomAuthUtility.appendCustomAuthParams(headers)
 
         # Prepare and invoke the API call request to fetch the response
-        response = unirest.put(query_url, headers=headers,  params=APIHelper.json_serialize(billing))
+        #response = unirest.put(query_url, headers=headers,  params=APIHelper.json_serialize(billing))
+        response = CustomAuthUtility.appendCustomAuthParams(method='PUT',
+            query_url=query_url, body=body, headers=headers)
 
         # Error handling using HTTP status codes
         if response.code == 400:
@@ -191,10 +199,12 @@ class TelephoneNumbersController(object):
         }
 
         #append custom auth authorization
-        CustomAuthUtility.appendCustomAuthParams(headers)
+        #CustomAuthUtility.appendCustomAuthParams(headers)
 
         # Prepare and invoke the API call request to fetch the response
-        response = unirest.get(query_url, headers=headers)
+        #response = unirest.get(query_url, headers=headers)
+        response = CustomAuthUtility.appendCustomAuthParams(method='GET',
+            query_url=query_url, headers=headers)
 
         # Error handling using HTTP status codes
         if response.code == 400:
@@ -256,12 +266,16 @@ class TelephoneNumbersController(object):
             "content-type": "application/json; charset=utf-8",
 
         }
+        routes = APIHelper.json_serialize(routes)
+        body = '{"routes": %s}' % routes
 
         #append custom auth authorization
-        CustomAuthUtility.appendCustomAuthParams(headers)
+        #CustomAuthUtility.appendCustomAuthParams(headers)
 
         # Prepare and invoke the API call request to fetch the response
-        response = unirest.patch(query_url, headers=headers,  params=APIHelper.json_serialize(routes))
+        #response = unirest.patch(query_url, headers=headers,  params=APIHelper.json_serialize(routes))
+        response = CustomAuthUtility.appendCustomAuthParams(method='PATCH',
+            query_url=query_url, body=body, headers=headers)
 
         # Error handling using HTTP status codes
         if response.code == 400:

@@ -10,6 +10,7 @@ import unirest
 from FlowrouteNumbersLib.APIHelper import APIHelper
 from FlowrouteNumbersLib.Configuration import Configuration
 from FlowrouteNumbersLib.APIException import APIException
+from FlowrouteNumbersLib.CustomAuthUtility import CustomAuthUtility
 
 
 class InboundRoutesController(object):
@@ -63,10 +64,12 @@ class InboundRoutesController(object):
         }
 
         #append custom auth authorization
-        CustomAuthUtility.appendCustomAuthParams(headers)
+        #CustomAuthUtility.appendCustomAuthParams(headers)
 
         # Prepare and invoke the API call request to fetch the response
-        response = unirest.get(query_url, headers=headers)
+        #response = unirest.get(query_url, headers=headers)
+        response = CustomAuthUtility.appendCustomAuthParams(method='GET',
+            query_url=query_url, headers=headers)
 
         # Error handling using HTTP status codes
         if response.code == 400:
@@ -125,11 +128,15 @@ class InboundRoutesController(object):
 
         }
 
+        body = '{"type": "%s", "value": "%s"}' % (mtype, value)
+
         #append custom auth authorization
-        CustomAuthUtility.appendCustomAuthParams(headers)
+        #CustomAuthUtility.appendCustomAuthParams(headers)
 
         # Prepare and invoke the API call request to fetch the response
-        response = unirest.put(query_url, headers=headers,  params=mtype)
+        #response = unirest.put(query_url, headers=headers,  params=mtype)
+        response = CustomAuthUtility.appendCustomAuthParams(method='PUT',
+            query_url=query_url, body=body, headers=headers)
 
         # Error handling using HTTP status codes
         if response.code == 400:

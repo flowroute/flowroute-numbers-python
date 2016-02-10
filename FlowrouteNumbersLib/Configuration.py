@@ -12,10 +12,12 @@ class Configuration :
 
     # Tech Prefix
     # TODO: Replace the username with an appropriate value
-    username = "TODO: Replace"
+    #username = "TODO: Replace"
+    username = "11656133"
 
     # API Secret Key
     # TODO: Replace the password with an appropriate value
-    password = "TODO: Replace"
+    #password = "TODO: Replace"
+    password = "92225213c4c76dcff0891fceba2f88e4"
 
 

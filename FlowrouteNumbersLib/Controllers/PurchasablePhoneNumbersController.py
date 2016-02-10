@@ -10,6 +10,7 @@ import unirest
 from FlowrouteNumbersLib.APIHelper import APIHelper
 from FlowrouteNumbersLib.Configuration import Configuration
 from FlowrouteNumbersLib.APIException import APIException
+from FlowrouteNumbersLib.CustomAuthUtility import CustomAuthUtility
 
 
 class PurchasablePhoneNumbersController(object):
@@ -67,10 +68,12 @@ class PurchasablePhoneNumbersController(object):
         }
 
         #append custom auth authorization
-        CustomAuthUtility.appendCustomAuthParams(headers)
+        #CustomAuthUtility.appendCustomAuthParams(headers)
 
         # Prepare and invoke the API call request to fetch the response
-        response = unirest.get(query_url, headers=headers)
+        #response = unirest.get(query_url, headers=headers)
+        response = CustomAuthUtility.appendCustomAuthParams(method='GET',
+            query_url=query_url, headers=headers)
 
         # Error handling using HTTP status codes
         if response.code == 400:
@@ -128,10 +131,12 @@ class PurchasablePhoneNumbersController(object):
         }
 
         #append custom auth authorization
-        CustomAuthUtility.appendCustomAuthParams(headers)
+        #CustomAuthUtility.appendCustomAuthParams(headers)
 
         # Prepare and invoke the API call request to fetch the response
-        response = unirest.get(query_url, headers=headers)
+        #response = unirest.get(query_url, headers=headers)
+        response = CustomAuthUtility.appendCustomAuthParams(method='GET',
+            query_url=query_url, headers=headers)
 
         # Error handling using HTTP status codes
         if response.code == 400:
@@ -212,10 +217,12 @@ class PurchasablePhoneNumbersController(object):
         }
 
         #append custom auth authorization
-        CustomAuthUtility.appendCustomAuthParams(headers)
+        #CustomAuthUtility.appendCustomAuthParams(headers)
 
         # Prepare and invoke the API call request to fetch the response
-        response = unirest.get(query_url, headers=headers)
+        #response = unirest.get(query_url, headers=headers)
+        response = CustomAuthUtility.appendCustomAuthParams(method='GET',
+            query_url=query_url, headers=headers)
 
         # Error handling using HTTP status codes
         if response.code == 400:
