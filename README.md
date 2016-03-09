@@ -33,7 +33,7 @@ The following shows how to import the SDK API Wrapper and setup your API credent
 	from FlowrouteNumbersLib.Controllers.TelephoneNumbersController  import *
 	from FlowrouteNumbersLib.Models  import *        
    
-2) Configure your API Username and Password from [Flowroute Manager](https://manage.flowroute.com/accounts/preferences/beta/).
+2) Configure your API Username and Password from [Flowroute Manager](https://manage.flowroute.com/accounts/preferences/api/).
  > If you do not have an API Key contact support@flowroute.com:
 
 	Configuration.username="AccessKey"
