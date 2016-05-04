@@ -1,6 +1,6 @@
 # flowroute-numbers-python
 
-## What is it?
+## About the flowroute-numbers-python SDK
 
 Flowroute-numbers-python is a Python API Wrapper that provides methods for interacting with [Flowroute's](https://www.flowroute.com) v1 API. These methods can be used to accomplish the following:
 
@@ -13,20 +13,25 @@ Flowroute-numbers-python is a Python API Wrapper that provides methods for inter
 ## Documentation 
 The full documentation for Flowroute's v1 API is available at [Developer.flowroute.com](https://developer.flowroute.com/).
 
-## How To Install 
+## Install the required libraries 
 
-The API Wrapper uses the UniRest and Jsonpickle Python libraries, which will need to be installed before you can use the SDK. To install these packages, open a terminal session and execute the following commands
+The SDK uses the **Unirest** and **jsonpickle** Python libraries, which must be installed before you can use the SDK. 
+> **Note:** You must be connected to the Internet in order to install the required libraries.
 
-	cd flowroute-numbers-python/
-	pip install -r requirements.txt
+1. Open a terminal session. 
 
-> Note: You will need to be connected to the internet in order to install the required packages
+2. Run the following two commands:
+#####
+	`cd flowroute-numbers-python/`
+	
+	`pip install -r requirements.txt`
+
   
-## How To Get Setup
+## Import the SDK
 
 The following shows how to import the SDK API Wrapper and setup your API credentials.
 
-1) Import the SDK module:
+1) Run the following to import the SDK module:
 
 	from FlowrouteNumbersLib.Controllers.InboundRoutesController  import *
 	from FlowrouteNumbersLib.Controllers.PurchasablePhoneNumbersController  import *
@@ -34,7 +39,7 @@ The following shows how to import the SDK API Wrapper and setup your API credent
 	from FlowrouteNumbersLib.Models  import *        
    
 2) Configure your API Username and Password from [Flowroute Manager](https://manage.flowroute.com/accounts/preferences/api/).
- > If you do not have an API Key contact support@flowroute.com:
+ > If you do not have an API Key contact <mailto:support@flowroute.com>:
 
 	Configuration.username="AccessKey"
 	Configuration.password="SecretKey"
