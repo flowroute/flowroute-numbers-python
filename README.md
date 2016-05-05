@@ -2,77 +2,119 @@
 
 ## About the flowroute-numbers-python SDK
 
-Flowroute-numbers-python is a Python API Wrapper that provides methods for interacting with [Flowroute's](https://www.flowroute.com) v1 API. These methods can be used to accomplish the following:
+Flowroute-numbers-python is a Python API Wrapper that provides methods for interacting with **v1** (version 1) of the [Flowroute](https://www.flowroute.com) API. These methods can be used to accomplish the following:
 
 * Search for purchasable phone numbers
 * Purchase phone numbers
-* View your owned phone numbers and their related details
-* Create new inbound routes
+* View the phone numbers you own, as well as their related details
+* Create a new inbound route
 * Update the primary and failover route on a phone number
 
 ## Documentation 
-The full documentation for Flowroute's v1 API is available at [Developer.flowroute.com](https://developer.flowroute.com/).
+The full documentation for Flowroute's v1 API is available at [Flowroute Developer Portal](https://developer.flowroute.com/).
 
 ## Install the required libraries 
 
 The SDK uses the **Unirest** and **jsonpickle** Python libraries, which must be installed before you can use the SDK. 
 > **Note:** You must be connected to the Internet in order to install the required libraries.
 
-1. Open a terminal session. 
+2. If needed, create a parent directory folder where you want to install the SDK.
+ 
+3. Go to the parent directory, and run the following:
 
-2. Run the following two commands:
-#####
-	`cd flowroute-numbers-python/`
-	
+ 	`git clone https://github.com/flowroute/flowroute-numbers-python.git`
+ 	
+ 	The `git clone` command clones the **flowroute-numbers-python** respository as a sub directory within the parent folder.
+ 	
+4.	Change directories to the newly created **flowroute-numbers-python** directory.
+
+5.	Run the following:
+
 	`pip install -r requirements.txt`
+
+6.	Import the SDK.
 
   
 ## Import the SDK
 
-The following shows how to import the SDK API Wrapper and setup your API credentials.
+The following describes how to import the Python SDK and set up your API credentials. Before you start, you should have your API credentials (Access Key and Secret Key). These can be found on the **Preferences > API Control** page of the [Flowroute](https://manage.flowroute.com/accounts/preferences/api/) portal.
 
-1) Run the following to import the SDK module:
+>**Note:** If you do not have API credentials, contact <mailto:support@flowroute.com>.
 
-	from FlowrouteNumbersLib.Controllers.InboundRoutesController  import *
-	from FlowrouteNumbersLib.Controllers.PurchasablePhoneNumbersController  import *
-	from FlowrouteNumbersLib.Controllers.TelephoneNumbersController  import *
-	from FlowrouteNumbersLib.Models  import *        
+1.	From the **flowroute-number-python** directory, run
+
+	`python`
+		
+2.	At the `>>>` prompt run the following import commands:
+
+	`from FlowrouteNumbersLib.Controllers.InboundRoutesController  import *`
+	`from FlowrouteNumbersLib.Controllers.PurchasablePhoneNumbersController  import *`
+	`from FlowrouteNumbersLib.Controllers.TelephoneNumbersController  import *`
+	`from FlowrouteNumbersLib.Models  import *  `      
    
-2) Configure your API Username and Password from [Flowroute Manager](https://manage.flowroute.com/accounts/preferences/api/).
- > If you do not have an API Key contact <mailto:support@flowroute.com>:
+3.	Run the following, replacing the *`Access Key`* and *`Secret Key`* variables within the quotes (`""`) with your own Access Key and Secret Key::
 
-	Configuration.username="AccessKey"
-	Configuration.password="SecretKey"
+		Configuration.username="Access Key"
+		Configuration.password="Secret Key"
 	
-> These variables can also be hard coded in the Configuration.py file instead of being overwritten in code.
+	> **Note:** These variables can also be hard coded in the **Configuration.py** file instead of being overwritten in code.
 
-3) Instantiate your controllers for later use
-
-	irc = InboundRoutesController()
-	pnc = PurchasablePhoneNumbersController()
-	tnc = TelephoneNumbersController()
+4.	Instantiate your controllers for later use
+	
+		irc = InboundRoutesController()
+		pnc = PurchasablePhoneNumbersController()
+		tnc = TelephoneNumbersController()
 	
 
+## PurchasablePhoneNumbersController
 
-## List of Methods and Example Uses
+The Purchasable Phone Numbers Controller contains all methods neccesary to search through Flowroute's phone number inventory. 
 
-### PurchasablePhoneNumbersController
+### list_available\_np\_as(self,limit=None)
 
-The Purchasable Phone Numbers Controller contains all of the methods neccesary to search through Flowroute's phone number inventory. 
+This method allows you to retrieve a list of every NPA (area code) available in Flowroute's phone number inventory.
+####Usage
 
-#### list_available\_np\_as(self,limit=None)
-
-The list_available\_np\_as method allows you to retrieve a list of every NPA (area code) available in Flowroute's phone number inventory.
+	pnc.list_available_np_as()
 
 | Parameter | Required | Usage                                 |
 |-----------|----------|---------------------------------------|
-| limit     | False    | Controls the number of items returned (Max 200) |
+| `() `  | True    | Controls the number of items returned. The number must be 1 (one) to 200.  |
 
 ##### Example Usage
-	
-	pnc.list_available_np_as()
+The following example passes `2` as the number of items to return. 
 
-#### list_area_and_exchange(self,limit=None,npa=None,page=None)
+	pnc.list_available_np_as(2)	
+
+#####Example response
+
+
+>**Note:** The following response is formatted only to provide an example of what the output can include. It is not intended to show the output in your installation.
+
+	{
+ 	 "npas": {
+ 	   "201": {
+ 	     "nxxs": "/v1/available-tns/npanxxs/?npa=201",
+  	    "tns": "/v1/available-tns/tns/?npa=201"
+ 	   },
+ 	   "202": {
+	      "nxxs": "/v1/available-tns/npanxxs/?npa=202",
+	      "tns": "/v1/available-tns/tns/?npa=202"
+	    }
+	  },
+	  "links": {
+  	  "next": "/v1/available-tns/npas/?limit=2&page=2"
+	  }
+	}
+#####Error response
+The following error can be returned:
+
+| Error code | Message  | Description                                                 |
+|------------|----------|-------------------------------------------------------|
+|No code number  |Response Not OK|This error is most commonly returned when the number passed in the method is greater than the allowed maximum.|
+|500  |Application Error|This error is most commonly returned when `0` is passed.|
+
+### list_area_and_exchange(self,limit=None,npa=None,page=None)
 
 The list_area_and_exchange method allows you to retrieve a list of every NPA-NXX (area code and exchange) available in Flowroute's phone number inventory.
 
