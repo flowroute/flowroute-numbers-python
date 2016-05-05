@@ -70,24 +70,26 @@ The following describes how to import the Python SDK and set up your API credent
 
 The Purchasable Phone Numbers Controller contains all methods neccesary to search through Flowroute's phone number inventory. 
 
-### list_available\_np\_as(self,limit=None)
+### `list_available_np_as(self,limit=None)`
 
-This method allows you to retrieve a list of every NPA (area code) available in Flowroute's phone number inventory.
+The `list_available_np_as()` method retrieves a list of every NPA (area code) available in Flowroute's phone number inventory.
+
 ####Usage
 
-	pnc.list_available_np_as()
+	pnc.list_available_np_as(limit=x)
 
 | Parameter | Required | Usage                                 |
 |-----------|----------|---------------------------------------|
-| `() `  | True    | Controls the number of items returned. The number must be 1 (one) to 200.  |
+| `limit=x`  | True    | Controls the number of items returned. The number must be 1 (one) to 200.  |
 
 ##### Example Usage
 The following example passes `2` as the number of items to return. 
 
-	pnc.list_available_np_as(2)	
+	pnc.list_available_np_as(limit=2)	
 
 #####Example response
 
+Results are returned in numerical order, starting with the lowest NPA number.
 
 >**Note:** The following response is formatted only to provide an example of what the output can include. It is not intended to show the output in your installation.
 
@@ -107,6 +109,53 @@ The following example passes `2` as the number of items to return.
 	  }
 	}
 #####Error response
+The following errors can be returned:
+
+| Error code | Message  | Description                                                 |
+|------------|----------|-------------------------------------------------------|
+|No code number  |Response Not OK|This error is most commonly returned when the number passed in the method is greater than the allowed maximum.|
+|500  |Application Error|This error is most commonly returned when `0` is passed.|
+
+###`list_area_and_exchange(self,limit=None,npa=None,page=None)`
+
+The `list_area_and_exchange()` method retrieves a list of every NPA-NXX (area code and exchange) available in Flowroute's phone number inventory.
+
+#####Usage
+`pnc.list_area_and_exchange(limit=x,npa=x,page=x)`
+
+| Parameter | Required | Usage                                                         |
+|-----------|----------|---------------------------------------------------------------|
+| limit     | False    | Controls the number of items returned. This can be a maximum of 200.                         |
+| npa       | False    | Limits results to the specified NPA (area code). |
+| page      | False    | Sets which page of the results is returned in the output.             |
+
+##### Example Usage
+The following example sets a limit of `2`, `206` for the NPA, and to display page `2` in the output.
+
+`pnc.list_area_and_exchange(limit=2,npa=206,page=2)`
+
+#####Example response
+
+Results are returned in numerical order, starting with the lowest NPA number. The `npaxxs` variable is formatted as a combination of the area code and exchange. In the following example, `206258` is area code `206` and exchange `258`. 
+
+>**Note:** The following response is formatted only for display purposes. It is not intended to show the actual response formatting.
+
+	{
+  	"npanxxs": {
+  	  "206258": {
+  	    "tns": "/v1/available-tns/tns/?npa=206&nxx=258"
+ 	   },
+ 	   "206238": {
+ 	     "tns": "/v1/available-tns/tns/?npa=206&nxx=238"
+	    }
+	  },
+	  "links": {
+	    "prev": "/v1/available-tns/npanxxs/?npa=206&limit=2&page=1",
+	    "next": "/v1/available-tns/npanxxs/?npa=206&limit=2&page=3"
+ 	 }
+	}
+
+#####Error response
 The following error can be returned:
 
 | Error code | Message  | Description                                                 |
@@ -114,20 +163,6 @@ The following error can be returned:
 |No code number  |Response Not OK|This error is most commonly returned when the number passed in the method is greater than the allowed maximum.|
 |500  |Application Error|This error is most commonly returned when `0` is passed.|
 
-### list_area_and_exchange(self,limit=None,npa=None,page=None)
-
-The list_area_and_exchange method allows you to retrieve a list of every NPA-NXX (area code and exchange) available in Flowroute's phone number inventory.
-
-| Parameter | Required | Usage                                                         |
-|-----------|----------|---------------------------------------------------------------|
-| limit     | False    | Controls the number of items returned (Max 200)                         |
-| npa       | False    | Limits results to the specified NPA (also known as area code) |
-| page      | False    | Determines which page of the results is returned              |
-
-##### Example Usage
-		
-	pnc.list_area_and_exchange()
-	
 #### search(self,limit=None,              npa=None,nxx=None,page=None,ratecenter=None,state=None,tn=None)
 
 The search method is the most robust option for searching through Flowroute's purchasable phone number inventory. It allows you to search by NPA, NXX, Ratecenter, State, and TN.
