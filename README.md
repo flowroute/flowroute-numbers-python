@@ -47,10 +47,13 @@ The following describes how to import the Python SDK and set up your API credent
 		
 2.	At the `>>>` prompt run the following import commands:
 
-	`from FlowrouteNumbersLib.Controllers.InboundRoutesController  import *`
-	`from FlowrouteNumbersLib.Controllers.PurchasablePhoneNumbersController  import *`
-	`from FlowrouteNumbersLib.Controllers.TelephoneNumbersController  import *`
-	`from FlowrouteNumbersLib.Models  import *  `      
+		from FlowrouteNumbersLib.Controllers.InboundRoutesController import *
+				
+		from FlowrouteNumbersLib.Controllers.PurchasablePhoneNumbersController import *
+			
+		from FlowrouteNumbersLib.Controllers.TelephoneNumbersController import *
+			
+		from FlowrouteNumbersLib.Models import *        
    
 3.	Run the following, replacing the *`Access Key`* and *`Secret Key`* variables within the quotes (`""`) with your own Access Key and Secret Key::
 
@@ -76,11 +79,13 @@ The `list_available_np_as()` method retrieves a list of every NPA (area code) av
 
 ####Usage
 
-	pnc.list_available_np_as(limit=x)
+	pnc.list_available_np_as()
+
+The method takes the following parameter:
 
 | Parameter | Required | Usage                                 |
 |-----------|----------|---------------------------------------|
-| `limit=x`  | True    | Controls the number of items returned. The number must be 1 (one) to 200.  |
+| `limit`  | True    | Controls the number of items returned. The number must be `1` (one) to `200`.  |
 
 ##### Example Usage
 The following example passes `2` as the number of items to return. 
@@ -113,21 +118,23 @@ The following errors can be returned:
 
 | Error code | Message  | Description                                                 |
 |------------|----------|-------------------------------------------------------|
-|No code number  |Response Not OK|This error is most commonly returned when the number passed in the method is greater than the allowed maximum.|
-|500  |Application Error|This error is most commonly returned when `0` is passed.|
+|No code number  |Response Not OK|This error is most commonly returned when the number passed in the method is greater than the allowed maximum of `200`.|
+|500  |Application Error|This error is most commonly returned when `0` is passed for the `limit`.|
 
 ###`list_area_and_exchange(self,limit=None,npa=None,page=None)`
 
 The `list_area_and_exchange()` method retrieves a list of every NPA-NXX (area code and exchange) available in Flowroute's phone number inventory.
 
 #####Usage
-`pnc.list_area_and_exchange(limit=x,npa=x,page=x)`
+`pnc.list_area_and_exchange()`
+
+The method can take the following parameters:
 
 | Parameter | Required | Usage                                                         |
 |-----------|----------|---------------------------------------------------------------|
-| limit     | False    | Controls the number of items returned. This can be a maximum of 200.                         |
+| limit     | False    | Controls the number of items returned. This can be a maximum of 200. If `limit` is passed, a number between `1` (one) and `200` must be set.                       |
 | npa       | False    | Limits results to the specified NPA (area code). |
-| page      | False    | Sets which page of the results is returned in the output.             |
+| page      | False    | Sets which page of the results is returned in the output. When set, `prev` and `next` page links appear in the response.|            |
 
 ##### Example Usage
 The following example sets a limit of `2`, `206` for the NPA, and to display page `2` in the output.
@@ -160,28 +167,66 @@ The following error can be returned:
 
 | Error code | Message  | Description                                                 |
 |------------|----------|-------------------------------------------------------|
-|No code number  |Response Not OK|This error is most commonly returned when the number passed in the method is greater than the allowed maximum.|
-|500  |Application Error|This error is most commonly returned when `0` is passed.|
+|No code number  |Response Not OK|This error is most commonly returned when the number passed for the limit is greater than the allowed maximum of 200.|
+|500  |Application Error|This error is most commonly returned when `0` is passed for the `limit`.|
 
-#### search(self,limit=None,              npa=None,nxx=None,page=None,ratecenter=None,state=None,tn=None)
+### `search(self,limit=None,              npa=None,nxx=None,page=None,ratecenter=None,state=None,tn=None)`
 
-The search method is the most robust option for searching through Flowroute's purchasable phone number inventory. It allows you to search by NPA, NXX, Ratecenter, State, and TN.
+The search method is is used to search by NPA, NXX, Ratecenter, State, or TN (telephone number). 
+##### Usage
+
+	pnc.search()
+
+The method can take the following parameters:
 
 | Parameter  | Required                       | Usage                                                                     |
 |------------|--------------------------------|---------------------------------------------------------------------------|
-| limit      | False                          | Controls the number of items returned (Max 200)                                     |
-| npa        | False, unless nxx is present   | Limits results to the specified NPA (also known as area code)             |
-| nxx        | False                          | Limits results to the specified NXX (also known as exchange)              |
-| page       | False                          | Determines which page of the results is returned                          |
-| ratecenter | False                          | Limits results to the specified ratecenter                                |
-| state      | False, unless state is present | Limits results to the specified state                                     |
-| tn         | False                          | Limits results to the specified telephone number (supports prefix search) |
+| limit      | False                          |Controls the number of items returned. This can be a maximum of 200. If `limit` is passed, a number between `1` (one) and `200` must be set.                                         |
+| npa        | False, unless *`nxx`* is present   | Limits results to the specified NPA (area code).             |
+| nxx        | False                          | Limits the results to the specified NXX (exchange).              |
+| page       | False                          | Sets which page of the results is returned in the output. When set, `prev` and `next` page links appear in the response.                         |
+| ratecenter | False                          | Limits results to the specified *`ratecenter`*.                                |
+| state      | False, unless *`state`* is passed. | Limits results to the specified *`state`*.                                    |
+| tn         | False                          | Limits results to the specified telephone number. This field uses partial match search. For example, if *`206`* is passed, all results that include *`206`* are returned. |
 
 ##### Example Usage
 
-	pnc.search()
+	pnc.search(limit=1,npa=206,nxx=743,page=1,ratecenter='seattle',state='wa')
 	
-### TelephoneNumbersController
+>**Note:** The following response is formatted only for display purposes. It is not intended to show the actual response formatting.	
+	
+	{
+  	"links": {
+  	  "next": "/v1/available-tns/tns/?npa=206&nxx=743&state=wa&ratecenter=seattle&limit=1&page=2"
+ 	 },
+ 	 "tns": {
+	    "12067439178": {
+	     "initial_cost": "1.00",
+ 	     "monthly_cost": "1.25",
+  	    "state": "WA",
+  	    "ratecenter": "SEATTLE",
+  	    "billing_methods": [
+  	      "VPRI",
+   	     "METERED"
+   	   ]
+ 	   }
+ 		 }
+}
+#####Response fields
+The following fields are returned in the response:
+
+Parameter | Description                                             |
+|--------|-------------------------------------------------------|
+| `tns`  | Object composed of the following |
+| | *`telephone number`*   Object composed of the following:
+| |`initial_cost`
+| |`monthly_cost`
+| |`state`
+| |`ratecenter`
+| |`billing_methods`: 
+
+	
+##TelephoneNumbersController
 
 The Telephone Numbers Controller contains all of the methods neccesary to purchase a new phone number and to manage your owned phone number inventory.
 
