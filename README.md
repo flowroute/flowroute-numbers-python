@@ -115,7 +115,7 @@ The following errors can be returned:
 
 | Error code | Message  | Description                                                 |
 |------------|----------|-------------------------------------------------------|
-|No code number  |Response Not OK|This error is most commonly returned when the number passed in the method is greater than the allowed maximum of `200`.|
+|No error code.  |Response Not OK|This error is most commonly returned when the number passed in the method is greater than the allowed maximum of `200`.|
 |500  |Application Error|This error is most commonly returned when `0` is passed for the `limit`.|
 
 ###`list_area_and_exchange(self,limit=None,npa=None,page=None)`
@@ -164,7 +164,7 @@ The following error can be returned:
 
 | Error code | Message  | Description                                                 |
 |------------|----------|-------------------------------------------------------|
-|No code number  |Response Not OK|This error is most commonly returned when the number passed for the limit is greater than the allowed maximum of 200.|
+|No error code.  |Response Not OK|This error is most commonly returned when the number passed for the limit is greater than the allowed maximum of 200.|
 |500  |Application Error|This error is most commonly returned when `0` is passed for the `limit`.|
 
 ### `search(self,limit=None,              npa=None,nxx=None,page=None,ratecenter=None,state=None,tn=None)`
@@ -215,13 +215,12 @@ The following fields are returned in the response:
 Parameter | Description                                             |
 |--------|-------------------------------------------------------|
 | `tns`  | Object composed of *`telephonenumber`*.|                           |
-||	*`telephone number`*: The retrieved telephone number object, which is composed of:|
-||	<ul> `initial_cost`: The one-time fixed cost for that telephone number. The default value is USD `1.00`.</ul>|
-| | <ol>`monthly_cost`: The recurring monthly cost to maintain that telephone number. The default value is USD `1.25`.</ol>|
-||	`state`: The US State or Canadian territory in which the NPA/NXX is located.|
-||	`ratecenter`: The ratecenter associated with the NPA/NXX.</ol>|
-||	`billing_methods`: Displays the two billing methods for the telephone number: `VPRI` or `METERED`.  |
-
+||	<ul>*`telephone number`*- The retrieved telephone number object, which is composed of:|
+||	<ul><ul> `initial_cost`- The one-time fixed cost for that telephone number. The default value is USD `1.00`.</ul>|
+| | <ul><ul>`monthly_cost`- The recurring monthly cost to maintain that telephone number. The default value is USD `1.25`.</ol>|
+||	<ul>`state`- The US State or Canadian territory in which the NPA/NXX is located.|
+||	<ul>`ratecenter`- The ratecenter associated with the NPA/NXX.</ol>|
+||	<ul>`billing_methods`- Displays the two billing methods for the telephone number: `VPRI` or `METERED`.</ul>  |
 	
 ##TelephoneNumbersController
 
@@ -258,7 +257,7 @@ The following error can be returned:
 
 | Error code | Message  | Description                                                 |
 |------------|----------|-------------------------------------------------------|
-|No code number  |HTTP Response Not OK|The phone number to purchase might be incorrect.|
+|No error code.  |HTTP Response Not OK|The phone number to purchase might be incorrect.|
 
 #### `list_account_telephone_numbers(self,limit=None,page=None,pattern=None)`
 
@@ -308,25 +307,69 @@ The method can take the following parameters:
 
 Parameter | Description                                             |
 |--------|-------------------------------------------------------|
-| `tns`  | Object composed of *`telephonenumber`*.|                           |
-|| <li>*`telephone number`*: The telephone number you own. This object composed of the following:|
-| |<li><ol>`Routes`: Defines the parameters of the route. Composed of the following:
-| |	<li> <ol><ol>`type`: 
-|	|<li> <ol><ol>`name`: Name of the route. If no route
-||`billing_method`: This will be one of the two billing methods for that number, either `VPRI` or `METERED`.
-||detail: Provides more detail that can be passed when using the `telephone_number_details` method below|
-	
-#### telephone\_number\_details(self,telephone_number)
+| `tns`  | The telephone number retrieved from the request; it is composed of the following *`telephonenumber`* object.|                           |
+|| <ul>*`telephone number`*- The telephone number you own. This object is further composed of `routes`:|
+| |<ul><ul>`routes`- Defines the parameters of the route. Composed of the following:</ul>
+| |	<ul><ul><ul>`type`- Indicates the type of route: `HOST`, `PSTN`, `URI`, or `SIP-REG`. `SIP-REG` is the default name assigned to the route if none is assigned.
+| |<ul> <ul><ul>`name`- Name of the route. If no `name` was given to the route, `sip-reg` is the assigned default name.</ul>
+||<ul>`billing_method`- Either `VPRI` or `METERED`.
+||<ul>`detail`- Provides more detail that can be passed when using the `telephone_number_details` method below. </ul>|
 
-The telephone\_number\_details method is used to retrieve the billing method, primary route, and failover route for the specified telephone number. 
+#####Error response
+The following error can be returned:
+
+| Error code | Message  | Description                                                 |
+|------------|----------|-------------------------------------------------------|
+|  No error code. |`{}`|The telephone number passed in the method does not contain the correct number of digits. It must use an 11-digit, `1NPANXXXXXXXXX1` format.
+
+	
+#### `telephone_number_details(self,telephone_number)`
+
+The `telephone_number_details` method is used to retrieve the billing method, primary route, and failover route for the specified telephone number. 
+
+#####Usage
+
+`tnc.telephone_number_details()`
+
+The method can take the following parameter:
 
 | Parameter       | Required | Usage                                             |
 |-----------------|----------|---------------------------------------------------|
-| telephoneNumber | True     | The telephone number that you would like to query |
+| `telephone_number_details` | True     | The telephone number on which to query.  |
 
 ##### Example Usage
 
-	tnc.telephone_number_details(12064205788)
+	tnc.telephone_number_details(12062092844)
+	
+#####Example response
+	{
+ 	 "routes": [
+  	  {
+ 	     "type": "SIP-REG",
+ 	     "name": "sip-reg"
+ 	   },
+	    {
+ 	     "type": "SIP-REG",
+ 	     "name": "sip-reg"
+ 	   }
+ 	 ],
+	  "billing_method": "METERED"
+	}
+##### Response fields
+
+Parameter | Description                                             |
+|--------|-------------------------------------------------------|
+| `routes`  | The routes associated with the telephone number; it is composed of the following:
+| |	<ul>`type`- Indicates the type of route: `HOST`, `PSTN`, `URI`, or `SIP-REG`. `SIP-REG` is the default name assigned to the route if none is assigned.
+| |<ul> `name`- Name of the route. If no `name` was given to the route, `sip-reg` is the assigned default name.</ul>
+|`billing_method`| Either `VPRI` or `METERED`.|
+
+#####Error response
+The following error can be returned:
+
+| Error code | Message  | Description                                                 |
+|------------|----------|-------------------------------------------------------|
+|No error code.  |`{}`|An incorrect number of digits was passed for the telephone number. The number must be a complete number in an E.164, 11-digit `1NPANXXXXXXXXX` format.|
 
 #### update(self,number,routes)
 
