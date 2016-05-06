@@ -214,7 +214,7 @@ The following fields are returned in the response:
 
 Parameter | Description                                             |
 |--------|-------------------------------------------------------|
-| `tns`  | Object composed of the *`telephonenumber`*.|                           |
+| `tns`  | Object composed of *`telephonenumber`*.|                           |
 || *`telephone number`*   Object composed of the following:|
 | |<ol> `initial_cost`: The one-time fixed cost for that telephone number. The default value is USD `1.00`.|
 | |<ol> `monthly_cost`: The recurring monthly cost to maintain that telephone number. The default value is USD `1.25`.|
@@ -242,8 +242,8 @@ The method takes the following parameters:
 
 | Parameter       | Required | Usage                                                                                |
 |-----------------|----------|--------------------------------------------------------------------------------------|
-| *`billing`*         | True     | Variable name that sets the billing method  the BillingMethod. The variable is then associated with one of two billing methods, `VPRI` or `METERED`. <li>`VPRI` are concurrent calls limited to the number of VPRI channels you have, but with unlimited usage on each channel.<li> `METERED` are unlimited concurrent calls, billed per-minute.</li>For this example, the variable is named *`billing`*.|
-| *`number`* | True     | Variable that sets the phone number to purchase. Must be from the list of available Flowroute telephone numbers and must be formatted using an E.164 11-digit `1NPANXXXXXXXXX` format.</br> For this example, the variable is named *`number`*.|                               |
+| *`billing`*         | True     | Variable name that sets the billing method  the BillingMethod. The variable is then associated with one of two billing methods, `VPRI` or `METERED`. <ul><li>`VPRI` are concurrent calls limited to the number of VPRI channels you have, but with unlimited usage on each channel.<li> `METERED` are unlimited concurrent calls, billed per-minute.</li>For this example, the variable is named *`billing`*.|
+| *`number`* | True     | Variable that sets the phone number to purchase. Must be from the list of available Flowroute telephone numbers and must be formatted using an E.164 11-digit `1NPANXXXXXXXXX` format.</ul></br> For this example, the variable is named *`number`*.|                               |
 	
 ##### Example Usage
 
