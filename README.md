@@ -216,11 +216,11 @@ Parameter | Description                                             |
 |--------|-------------------------------------------------------|
 | `tns`  | Object composed of the *`telephonenumber`*.|                           |
 || *`telephone number`*   Object composed of the following:|
-| |<li> `initial_cost`: The one-time fixed cost for that telephone number. The default value is USD `1.00`.|
-| |<li> `monthly_cost`: The recurring monthly cost to maintain that telephone number. The default value is USD `1.25`.|
-| |<li>`state`: The US State or Canadian territory in which the NPA/NXX is located.|
-| |<li>`ratecenter`: The ratecenter associated with the NPA/NXX.|
-| |<li> `billing_methods`: This will be either `VPRI` or `METERED`. </li> |
+| |<ol> `initial_cost`: The one-time fixed cost for that telephone number. The default value is USD `1.00`.|
+| |<ol> `monthly_cost`: The recurring monthly cost to maintain that telephone number. The default value is USD `1.25`.|
+| |<ol>`state`: The US State or Canadian territory in which the NPA/NXX is located.|
+| |<ol>`ratecenter`: The ratecenter associated with the NPA/NXX.|
+| |<ol> `billing_methods`: This will be either `VPRI` or `METERED`. </li> |
 
 	
 ##TelephoneNumbersController
