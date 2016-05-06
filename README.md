@@ -47,13 +47,10 @@ The following describes how to import the Python SDK and set up your API credent
 		
 2.	At the `>>>` prompt run the following import commands:
 
-		from FlowrouteNumbersLib.Controllers.InboundRoutesController import *
-				
-		from FlowrouteNumbersLib.Controllers.PurchasablePhoneNumbersController import *
-			
-		from FlowrouteNumbersLib.Controllers.TelephoneNumbersController import *
-			
-		from FlowrouteNumbersLib.Models import *        
+		`from FlowrouteNumbersLib.Controllers.InboundRoutesController import *`
+		`from FlowrouteNumbersLib.Controllers.PurchasablePhoneNumbersController import *`
+		`from FlowrouteNumbersLib.Controllers.TelephoneNumbersController import *`
+		`from FlowrouteNumbersLib.Models import *   `     
    
 3.	Run the following, replacing the *`Access Key`* and *`Secret Key`* variables within the quotes (`""`) with your own Access Key and Secret Key::
 
@@ -132,18 +129,18 @@ The method can take the following parameters:
 
 | Parameter | Required | Usage                                                         |
 |-----------|----------|---------------------------------------------------------------|
-| limit     | False    | Controls the number of items returned. This can be a maximum of 200. If `limit` is passed, a number between `1` (one) and `200` must be set.                       |
+| limit     | False    | Controls the number of items returned. This can be a maximum of `200`. If no limit is passed,  `10` results are returned as the default. These results are organized numerically by the combination of NPA and NXX. For example, *`206258`* is NPA *`206`* and NXX *`258`*.                   |
 | npa       | False    | Limits results to the specified NPA (area code). |
 | page      | False    | Sets which page of the results is returned in the output. When set, `prev` and `next` page links appear in the response.|            |
 
 ##### Example Usage
-The following example sets a limit of `2`, `206` for the NPA, and to display page `2` in the output.
+The following example sets `2` for the `limit`, `206` for the `npa`, and to display `page` `2` in the output:
 
 `pnc.list_area_and_exchange(limit=2,npa=206,page=2)`
 
 #####Example response
 
-Results are returned in numerical order, starting with the lowest NPA number. The `npaxxs` variable is formatted as a combination of the area code and exchange. In the following example, `206258` is area code `206` and exchange `258`. 
+Results are returned in numerical order, starting with the lowest NPA number. The `npaxxs` variable is formatted as a combination of the area code and exchange. In the following example, `206258` is the combination of area code `206` and exchange `258`. 
 
 >**Note:** The following response is formatted only for display purposes. It is not intended to show the actual response formatting.
 
@@ -180,13 +177,13 @@ The search method is is used to search by NPA, NXX, Ratecenter, State, or TN (te
 The method can take the following parameters:
 
 | Parameter  | Required                       | Usage                                                                     |
-|------------|--------------------------------|---------------------------------------------------------------------------|
-| limit      | False                          |Controls the number of items returned. This can be a maximum of 200. If `limit` is passed, a number between `1` (one) and `200` must be set.                                         |
+|------------|--------------------------------|--------------------------------------------------------------------|
+| limit      | False                          |Controls the number of items returned. This can be a maximum of 200.                                         These results are organized numerically by the combination of NPA and NXX. For example, *`206258`* is NPA *`206`* and NXX *`258`*.   |
 | npa        | False, unless *`nxx`* is present   | Limits results to the specified NPA (area code).             |
 | nxx        | False                          | Limits the results to the specified NXX (exchange).              |
 | page       | False                          | Sets which page of the results is returned in the output. When set, `prev` and `next` page links appear in the response.                         |
 | ratecenter | False                          | Limits results to the specified *`ratecenter`*.                                |
-| state      | False, unless *`state`* is passed. | Limits results to the specified *`state`*.                                    |
+| state      | False, unless *`ratecenter`* is passed. | Limits results to the specified two-character state or territory code.                                    |
 | tn         | False                          | Limits results to the specified telephone number. This field uses partial match search. For example, if *`206`* is passed, all results that include *`206`* are returned. |
 
 ##### Example Usage
@@ -211,33 +208,42 @@ The method can take the following parameters:
    	   ]
  	   }
  		 }
-}
+	}
 #####Response fields
 The following fields are returned in the response:
 
 Parameter | Description                                             |
 |--------|-------------------------------------------------------|
-| `tns`  | Object composed of the following |
-| | *`telephone number`*   Object composed of the following:
-| |`initial_cost`
-| |`monthly_cost`
-| |`state`
-| |`ratecenter`
-| |`billing_methods`: 
+| `tns`  | Object composed of the *`telephonenumber`*.|                           |
+|| *`telephone number`*   Object composed of the following:|
+| |<li> <ol>  `initial_cost`: The one-time fixed cost for that telephone number. The default value is USD `1.00`.|
+| |<li><ol> `monthly_cost`: The recurring monthly cost to maintain that telephone number. The default value is USD `1.25`.|
+| |<li> <ol>`state`: The US State or Canadian territory in which the NPA/NXX is located.|
+| |<li> <ol>`ratecenter`: The ratecenter associated with the NPA/NXX.|
+| |<li> <ol> `billing_methods`: This will be either `VPRI` or `METERED`. </li> |
 
 	
 ##TelephoneNumbersController
 
 The Telephone Numbers Controller contains all of the methods neccesary to purchase a new phone number and to manage your owned phone number inventory.
 
-#### purchase(self,billing,number)	
+#### `purchase(self,billing,number)`	
 
 The purchase method is used to purchase a telephone number from Flowroute's inventory.
 
+##### Usage
+
+ *`billing`*` = BillingMethod(billing_method="VPRI" or "METERED")`
+ `number="11-digit E.164-formatted telephone number`<br>
+ `tnc.purchase`*`(billing,number)`*
+
+The method takes the following parameters:
+
+
 | Parameter       | Required | Usage                                                                                |
 |-----------------|----------|--------------------------------------------------------------------------------------|
-| billing         | True     | A JSON object that specifies which billing method to use. Either "METERED" or "VPRI" |
-| telephoneNumber | True     | The telephone number that you would like to purchase                                 |
+| *`billing`*         | True     | Variable name that sets the billing method  the BillingMethod. The variable is then associated with one of two billing methods, `VPRI` or `METERED`. <li><ol>`VPRI` are concurrent calls limited to the number of VPRI channels you have, but with unlimited usage on each channel.</ol><li><ol> `METERED` are unlimited concurrent calls, billed per-minute. </ol>For this example, the variable is named *`billing`*.|
+| *`number`* | True     | Variable that sets the phone number to purchase. Must be from the list of available Flowroute telephone numbers and must be formatted using an E.164 11-digit `1NPANXXXXXXXXX` format.</br> For this example, the variable is named *`number`*.|                               |
 	
 ##### Example Usage
 
@@ -245,7 +251,14 @@ The purchase method is used to purchase a telephone number from Flowroute's inve
 	number = "15852003968"
 	tnc.purchase(billing,number)
 
-> If your query is succesful you will be returned an empty string and a 201 Created
+##### Example response
+For a successful purchase, an empty string (`''`) is returned
+#####Error response
+The following errors can be returned:
+
+| Error code | Message  | Description                                                 |
+|------------|----------|-------------------------------------------------------|
+|No code number  |HTTP Response Not OK|The phone number to purchase might be incorrect.|
 
 #### list\_account\_telephone_numbers(self,limit=None,page=None,pattern=None)
 
