@@ -215,12 +215,12 @@ The following fields are returned in the response:
 Parameter | Description                                             |
 |--------|-------------------------------------------------------|
 | `tns`  | Object composed of *`telephonenumber`*.|                           |
-|| <li>*`telephone number`*: The retrieved telephone number object, which is composed of:|
-||<li><ol> `initial_cost`: The one-time fixed cost for that telephone number. The default value is USD `1.00`.|
-| | <li> <ol>`monthly_cost`: The recurring monthly cost to maintain that telephone number. The default value is USD `1.25`.|
-||<li>`state`: The US State or Canadian territory in which the NPA/NXX is located.|
-||<li>`ratecenter`: The ratecenter associated with the NPA/NXX.</ol>|
-||<li> `billing_methods`: Displays the two billing methods for the telephone number: `VPRI` or `METERED`. </li> |
+||	 <li>*`telephone number`*: The retrieved telephone number object, which is composed of:|
+||	<li><ul> `initial_cost`: The one-time fixed cost for that telephone number. The default value is USD `1.00`.|
+| | 	<li> <ol>`monthly_cost`: The recurring monthly cost to maintain that telephone number. The default value is USD `1.25`.|
+||	<li>`state`: The US State or Canadian territory in which the NPA/NXX is located.|
+||	<li>`ratecenter`: The ratecenter associated with the NPA/NXX.</ol>|
+||	<li> `billing_methods`: Displays the two billing methods for the telephone number: `VPRI` or `METERED`. </li> |
 
 	
 ##TelephoneNumbersController
