@@ -47,10 +47,10 @@ The following describes how to import the Python SDK and set up your API credent
 		
 2.	At the `>>>` prompt run the following import commands:
 
-		`from FlowrouteNumbersLib.Controllers.InboundRoutesController import *`
-		`from FlowrouteNumbersLib.Controllers.PurchasablePhoneNumbersController import *`
-		`from FlowrouteNumbersLib.Controllers.TelephoneNumbersController import *`
-		`from FlowrouteNumbersLib.Models import *   `     
+	`from FlowrouteNumbersLib.Controllers.InboundRoutesController import *` <br>
+	`from FlowrouteNumbersLib.Controllers.PurchasablePhoneNumbersController import *` <br>
+	`from FlowrouteNumbersLib.Controllers.TelephoneNumbersController import *`<br>
+	`from FlowrouteNumbersLib.Models import * ` <br>
    
 3.	Run the following, replacing the *`Access Key`* and *`Secret Key`* variables within the quotes (`""`) with your own Access Key and Secret Key::
 
@@ -178,13 +178,13 @@ The method can take the following parameters:
 
 | Parameter  | Required                       | Usage                                                                     |
 |------------|--------------------------------|--------------------------------------------------------------------|
-| limit      | False                          |Controls the number of items returned. This can be a maximum of 200.                                         These results are organized numerically by the combination of NPA and NXX. For example, *`206258`* is NPA *`206`* and NXX *`258`*.   |
-| npa        | False, unless *`nxx`* is present   | Limits results to the specified NPA (area code).             |
-| nxx        | False                          | Limits the results to the specified NXX (exchange).              |
-| page       | False                          | Sets which page of the results is returned in the output. When set, `prev` and `next` page links appear in the response.                         |
-| ratecenter | False                          | Limits results to the specified *`ratecenter`*.                                |
-| state      | False, unless *`ratecenter`* is passed. | Limits results to the specified two-character state or territory code.                                    |
-| tn         | False                          | Limits results to the specified telephone number. This field uses partial match search. For example, if *`206`* is passed, all results that include *`206`* are returned. |
+| `limit`      | False                          |Controls the number of items returned. This can be a maximum of 200.                                         These results are organized numerically by the combination of NPA and NXX. For example, *`206258`* is NPA *`206`* and NXX *`258`*.   |
+| `npa`        | False, unless *`nxx`* is present   | Limits results to the specified NPA (area code).             |
+| `nxx`        | False                          | Limits the results to the specified NXX (exchange).              |
+| `page`       | False                          | Sets which page of the results is returned in the output. When set, `prev` and `next` page links appear in the response.                         |
+| `ratecenter` | False                          | Limits results to the specified *`ratecenter`*.                                |
+| `state`      | False, unless *`ratecenter`* is passed. | Limits results to the specified two-character state or territory code.                                    |
+| `tn`         | False                          | Limits results to the specified telephone number. This field uses partial match search. For example, if *`206`* is passed, all results that include *`206`* are returned. |
 
 ##### Example Usage
 
@@ -215,8 +215,12 @@ The following fields are returned in the response:
 Parameter | Description                                             |
 |--------|-------------------------------------------------------|
 | `tns`  | Object composed of *`telephonenumber`*.|                           |
-|| *`telephone number`*   Object composed of the following:|
-| |<ul><li> `initial_cost`: The one-time fixed cost for that telephone number. The default value is USD `1.00`. <li> `monthly_cost`: The recurring monthly cost to maintain that telephone number. The default value is USD `1.25`.<li>`state`: The US State or Canadian territory in which the NPA/NXX is located.<li>`ratecenter`: The ratecenter associated with the NPA/NXX.<li> `billing_methods`: This will be either `VPRI` or `METERED`. </li></ul> |
+|| <li>*`telephone number`*: The retrieved telephone number object, which is composed of:|
+||<li><ol> `initial_cost`: The one-time fixed cost for that telephone number. The default value is USD `1.00`.|
+| | <li> <ol>`monthly_cost`: The recurring monthly cost to maintain that telephone number. The default value is USD `1.25`.|
+||<li>`state`: The US State or Canadian territory in which the NPA/NXX is located.|
+||<li>`ratecenter`: The ratecenter associated with the NPA/NXX.</ol>|
+||<li> `billing_methods`: Displays the two billing methods for the telephone number: `VPRI` or `METERED`. </li> |
 
 	
 ##TelephoneNumbersController
@@ -229,8 +233,8 @@ The purchase method is used to purchase a telephone number from Flowroute's inve
 
 ##### Usage
 
- *`billing`*` = BillingMethod(billing_method="VPRI" or "METERED")`
- `number="11-digit E.164-formatted telephone number`<br>
+ *`billing`*` = BillingMethod(billing_method="VPRI" or "METERED")`</br>
+ *`number`*`= "11-digit E.164-formatted telephone number"`<br>
  `tnc.purchase`*`(billing,number)`*
 
 The method takes the following parameters:
@@ -238,7 +242,7 @@ The method takes the following parameters:
 
 | Parameter       | Required | Usage                                                                                |
 |-----------------|----------|--------------------------------------------------------------------------------------|
-| *`billing`*         | True     | Variable name that sets the billing method  the BillingMethod. The variable is then associated with one of two billing methods, `VPRI` or `METERED`. <ul><li>`VPRI` are concurrent calls limited to the number of VPRI channels you have, but with unlimited usage on each channel.<li> `METERED` are unlimited concurrent calls, billed per-minute.</li>For this example, the variable is named *`billing`*.|
+| *`billing`*         | True     | Variable that sets the billing method  the BillingMethod. The variable is then associated with one of two billing methods, `VPRI` or `METERED`. <ul><li>`VPRI` are concurrent calls limited to the number of VPRI channels you have, but with unlimited usage on each channel.<li> `METERED` are unlimited concurrent calls, billed per-minute.</li>For this example, the variable is named *`billing`*.|
 | *`number`* | True     | Variable that sets the phone number to purchase. Must be from the list of available Flowroute telephone numbers and must be formatted using an E.164 11-digit `1NPANXXXXXXXXX` format.</ul></br> For this example, the variable is named *`number`*.|                               |
 	
 ##### Example Usage
@@ -250,26 +254,68 @@ The method takes the following parameters:
 ##### Example response
 For a successful purchase, an empty string (`''`) is returned
 #####Error response
-The following errors can be returned:
+The following error can be returned:
 
 | Error code | Message  | Description                                                 |
 |------------|----------|-------------------------------------------------------|
 |No code number  |HTTP Response Not OK|The phone number to purchase might be incorrect.|
 
-#### list\_account\_telephone_numbers(self,limit=None,page=None,pattern=None)
+#### `list_account_telephone_numbers(self,limit=None,page=None,pattern=None)`
 
-The list\_account\_telephone_numbers method is used to retrieve a list of all of the phone numbers on your Flowroute account.
+
+The `list_account_telephone_numbers` method is used to retrieve a list of all of the phone numbers on your Flowroute account.
+
+#####Usage
+
+`tnc.list_account_telephone_numbers()`
+
+The method can take the following parameters:
 
 | Parameter | Required | Usage                                                     |
 |-----------|----------|-----------------------------------------------------------|
-| limit     | False    | Controls the number of items returned (Max 200)           |
-| page      | False    | Determines which page of the results is returned          |
-| pattern   | False    | A telephone number to search for (supports prefix search) |
+| `limit`  | True    | Controls the number of items returned. The number can be `1` (one) to `200`. If no `limit` is specified, a default value of `10` results are returned.  |
+| `page`      | False    | If multiple pages of numbers are returned, this field displays the results from the set page.     |
+| `pattern`   | False    |The telephone number on which to search. Partial search is supported; if any part of a telephone number is passed, the pattern will return *all* telephone numbers that include that pattern. |
 
 ##### Example Usage
 	
-	tnc.list_account_telephone_numbers(limit=1,page=2,pattern=1206)
+	tnc.list_account_telephone_numbers(limit=5,page=2,pattern=206)
 
+#####Example response
+	{
+	  "links": {
+	    "prev": "/v1/tns/?limit=1&page=1",
+	    "next": "/v1/tns/?limit=1&page=3"
+ 	 },
+	  "tns": {
+	    "12062092844": {
+   		  "routes": [
+   	     {
+   	       "type": "SIP-REG",
+   	       "name": "sip-reg"
+   	     },
+   	     {
+   	       "type": "SIP-REG",
+   	       "name": "sip-reg"
+   	     }
+   	   ],
+   	   "billing_method": "METERED",
+   	   "detail": "/v1/tns/12062092844"
+   	 }
+  	}
+	}
+#####Response fields
+
+Parameter | Description                                             |
+|--------|-------------------------------------------------------|
+| `tns`  | Object composed of *`telephonenumber`*.|                           |
+|| <li>*`telephone number`*: The telephone number you own. This object composed of the following:|
+| |<li><ol>`Routes`: Defines the parameters of the route. Composed of the following:
+| |	<li> <ol><ol>`type`: 
+|	|<li> <ol><ol>`name`: Name of the route. If no route
+||`billing_method`: This will be one of the two billing methods for that number, either `VPRI` or `METERED`.
+||detail: Provides more detail that can be passed when using the `telephone_number_details` method below|
+	
 #### telephone\_number\_details(self,telephone_number)
 
 The telephone\_number\_details method is used to retrieve the billing method, primary route, and failover route for the specified telephone number. 
