@@ -377,7 +377,7 @@ The update method is used to update both the primary and failover route for a ph
 
 #####Usage
 
-`rtes = [Route(name=primary route), Route(name=secondary route)]`
+`rtes = [Route(name=`primary route`), Route(name=`secondary route`)]`
 `tnc.update(number=phoneNumber, routes=rtes)`
 
 | Parameter       | Required | Usage                                                                  |
@@ -407,7 +407,7 @@ The list method is used to return all of the existing inbound routes from your F
 | Parameter | Required | Usage                                            |
 |-----------|----------|--------------------------------------------------|
 | limit     | False    | Sets the number of items returned. The maximum number is `200`. If no limit is set, `10` is used as a default. |
-| page      | False    | Sets which page of the results is returned. For example, if this parameter is set to `1`, page 1 of the results is returned when the method is run. |
+| page      | False    | Sets which page of the results is returned. For example, if this parameter is set to `1`, page 1 of the results is returned when run. |
 
 ##### Example Usage
 
@@ -417,6 +417,11 @@ The list method is used to return all of the existing inbound routes from your F
 	
 	{u'routes': {u'PSTNroute1': {u'type': u'PSTN', u'value': u'16476998778'}, 
 	u'sip-reg': {u'type': u'SIP-REG', u'value': None}}}
+
+#####Error response
+| Error code | Message  | Description                                                 |
+|------------|----------|-------------------------------------------------------|
+|No error code.  |HTTP Response Not OK|One or more of the parameters is outside the range of supported values.|	
 	
 #### `create_new_route(self,route_name,mtype,value)`<a name="createroute"></a>
 
@@ -426,7 +431,7 @@ The `create_new_route` endpoint is used to create a new inbound route. An inboun
 |-----------|----------|---------------------------------------------------------------|
 | route_name | True     | The name of the new route. This field supports an unlimited number of alphanumeric characters.  |
 | mtype      | True     | The type of route. Valid options are `HOST`, `PSTN`, and `URI` |
-| value     | True     | Value of the route, dependent on the `type`. If the `type` is `HOST`, the value must be an IP address or URL with an optional port number—for example, an IP address could be `24.239.23.40:5060` or a URL could be `myphone.com`. If no port is specified, the server will attempt to use DNS SRV records. If the type is `PSTN`, the value must be formatted as a valid E.164, 11-digit formatted North American phone number—for example,`16476998778`. If the type is `URI`, the value must be formatted as  `protocol:user@domain[:port][;transport=<tcp/udp>`—for example, `sip:alice@atlanta.com`,  `sip:16476998778@215.122.69.152:5060;transport=tcp`, or `sips:securecall@securedserver.com`.|                                          |
+| value     | True     | Value of the route, dependent on the `type`: <ul><li>If `HOST`, the value must be an IP address or URL with an optional port number—for example, an IP address could be `24.239.23.40:5060` or a URL could be `myphone.com`. If no port is specified, the server will attempt to use DNS SRV records. <li>If `PSTN`, the value must be formatted as a valid E.164, 11-digit formatted North American phone number—for example,`16476998778`. <li>If `URI`, the value must be formatted as  `protocol:user@domain[:port][;transport=<tcp/udp>`—for example, `sip:alice@atlanta.com`,  `sip:16476998778@215.122.69.152:5060;transport=tcp`, or `sips:securecall@securedserver.com`.</li></ul>|                                        |
 
 ##### Example Usage
 
