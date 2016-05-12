@@ -11,7 +11,7 @@ Flowroute-numbers-python is a Python API Wrapper that provides methods for inter
 * Update the primary and failover route on a phone number
 
 ## Documentation 
-The full documentation for Flowroute's v1 API is available at [Flowroute Developer Portal](https://developer.flowroute.com/).
+The full documentation for Flowroute's v1 API is available at the [Flowroute Developer Portal](https://developer.flowroute.com/v1.0/docs).
 
 ## Install the required libraries 
 
@@ -176,8 +176,8 @@ The search method is is used to search by NPA, NXX, Ratecenter, State, or TN (te
 
 The method can take the following parameters:
 
-| Parameter  | Required                       | Usage                                                                     |
-|------------|--------------------------------|--------------------------------------------------------------------|
+| Parameter  | Required                       | Usage                                                                     
+|------------|--------------------------------|--------------------------------------------------------------|
 | `limit`      | False                          |Controls the number of items returned. This can be a maximum of 200.                                         These results are organized numerically by the combination of NPA and NXX. For example, *`206258`* is NPA *`206`* and NXX *`258`*.   |
 | `npa`        | False, unless *`nxx`* is present   | Limits results to the specified NPA (area code).             |
 | `nxx`        | False                          | Limits the results to the specified NXX (exchange).              |
@@ -214,13 +214,13 @@ The following fields are returned in the response:
 
 Parameter | Description                                             |
 |--------|-------------------------------------------------------|
-| `tns`  | Object composed of *`telephonenumber`*.|                           |
-||	<ul>*`telephone number`*- The retrieved telephone number object, which is composed of:|
-||	<ul><ul> `initial_cost`- The one-time fixed cost for that telephone number. The default value is USD `1.00`.</ul>|
-| | <ul><ul>`monthly_cost`- The recurring monthly cost to maintain that telephone number. The default value is USD `1.25`.</ol>|
-||	<ul>`state`- The US State or Canadian territory in which the NPA/NXX is located.|
-||	<ul>`ratecenter`- The ratecenter associated with the NPA/NXX.</ol>|
-||	<ul>`billing_methods`- Displays the two billing methods for the telephone number: `VPRI` or `METERED`.</ul>  |
+| `tns`  | Object composed of *`telephonenumber`*, `state`, `r-atecenter`, and `billing_methods`.|                           |
+||	*`telephone number`*- The retrieved telephone number object, which is composed of:|
+||	<ul> `initial_cost`- The one-time fixed cost for that telephone number. The default value is USD `1.00`.</ul>|
+| | <ul>`monthly_cost`- The recurring monthly cost to maintain that telephone number. The default value is USD `1.25`.</ul>|
+||	`state`- The US State or Canadian territory in which the NPA/NXX is located.|
+||	`ratecenter`- The ratecenter associated with the NPA/NXX.</ol>|
+||	`billing_methods`- Displays the two billing methods for the telephone number: `VPRI` or `METERED`.  |
 	
 ##TelephoneNumbersController
 
@@ -233,16 +233,16 @@ The purchase method is used to purchase a telephone number from Flowroute's inve
 ##### Usage
 
  *`billing`*` = BillingMethod(billing_method="VPRI" or "METERED")`</br>
- *`number`*`= "11-digit E.164-formatted telephone number"`<br>
+ *`number`*`=`*`"telephone number"`* </br>
  `tnc.purchase`*`(billing,number)`*
 
 The method takes the following parameters:
 
 
 | Parameter       | Required | Usage                                                                                |
-|-----------------|----------|--------------------------------------------------------------------------------------|
-| *`billing`*         | True     | Variable that sets the billing method  the BillingMethod. The variable is then associated with one of two billing methods, `VPRI` or `METERED`. <ul><li>`VPRI` are concurrent calls limited to the number of VPRI channels you have, but with unlimited usage on each channel.<li> `METERED` are unlimited concurrent calls, billed per-minute.</li>For this example, the variable is named *`billing`*.|
-| *`number`* | True     | Variable that sets the phone number to purchase. Must be from the list of available Flowroute telephone numbers and must be formatted using an E.164 11-digit `1NPANXXXXXXXXX` format.</ul></br> For this example, the variable is named *`number`*.|                               |
+|-----------------|----------|-------------------------------------------------------------------------------|
+| *`billing`*         | True     | Variable that sets the billing the BillingMethod. The variable is then associated with one of two billing methods, `VPRI` or `METERED`. <ul><li>`VPRI` are concurrent calls limited to the number of VPRI channels you have, but with unlimited usage on each channel.<li> `METERED` are unlimited concurrent calls, billed per-minute.</li>For this example, the variable is named *`billing`*.|
+| *`number`* | True     | Variable that sets the phone number to purchase. Must be from the list of available Flowroute telephone numbers and must be formatted using an E.164 11-digit `1NPANXXXXXXXXX` format.</ul></br> For this example, the variable is named*`number`*.|                               |
 	
 ##### Example Usage
 
@@ -305,7 +305,7 @@ The method can take the following parameters:
 	}
 #####Response fields
 
-Parameter | Description                                             |
+|Parameter | Description                                             |
 |--------|-------------------------------------------------------|
 | `tns`  | The telephone number retrieved from the request; it is composed of the following *`telephonenumber`* object.|                           |
 || <ul>*`telephone number`*- The telephone number you own. This object is further composed of `routes`:|
@@ -339,7 +339,7 @@ The method can take the following parameter:
 
 ##### Example Usage
 
-	tnc.telephone_number_details(12062092844)
+	tnc.telephone_number_details(16476998778)
 	
 #####Example response
 	{
@@ -357,33 +357,40 @@ The method can take the following parameter:
 	}
 ##### Response fields
 
-Parameter | Description                                             |
+|Parameter | Description                                         |
 |--------|-------------------------------------------------------|
 | `routes`  | The routes associated with the telephone number; it is composed of the following:
-| |	<ul>`type`- Indicates the type of route: `HOST`, `PSTN`, `URI`, or `SIP-REG`. `SIP-REG` is the default name assigned to the route if none is assigned.
-| |<ul> `name`- Name of the route. If no `name` was given to the route, `sip-reg` is the assigned default name.</ul>
+| |	<ul>`type`- Indicates the type of route: `HOST`, `PSTN`, `URI`, or `SIP-REG`. `SIP-REG` is the default name assigned to the route if none is assigned. A route `type` can be created using the [`create_new_route`](#createroute) endpoint.
+| |<ul> `name`- Name of the route. If no `name` was given to the route, `sip-reg` is the assigned default name. A `name` is assigned to a route when the route is created.</ul>
 |`billing_method`| Either `VPRI` or `METERED`.|
 
 #####Error response
 The following error can be returned:
 
-| Error code | Message  | Description                                                 |
+| Error code | Message  | Description                                           |
 |------------|----------|-------------------------------------------------------|
-|No error code.  |`{}`|An incorrect number of digits was passed for the telephone number. The number must be a complete number in an E.164, 11-digit `1NPANXXXXXXXXX` format.|
+|No error code.  |`{}`|An incorrect number of digits was passed for the telephone number. The number must use E.164, 11-digit `1NPANXXXXXXXXX` format.|
 
-#### update(self,number,routes)
+#### `update(self,number,routes)`<a name="updateroute"></a>
 
-The update method is used to update both the primary and failover route for a phone number. Both the primary and failover route must be specified inside of an array (see Example Usage). The first route name specified will be assigned as the primary route and the second route name specified will be assigned as the failover route. The list of available route names can be retrieved by using the list method in the InboundRoutesController.
+The update method is used to update both the primary and failover route for a phone number. Both the primary and failover route must be specified inside of an array. See **Example usage** below. The first route name within the array is assigned as the primary route; the second route listed in the array will be the failover route in the event the first route is unavailable. The list of available route names can be retrieved by using the list method in the InboundRoutesController.
+
+#####Usage
+
+`rtes = [Route(name=primary route), Route(name=secondary route)]`
+`tnc.update(number=phoneNumber, routes=rtes)`
 
 | Parameter       | Required | Usage                                                                  |
-|-----------------|----------|------------------------------------------------------------------------|
-| telephoneNumber | True     | The telephone number that you would like to update routes for          |
-| routes          | True     | The names of the primary and failover routes for the phone number (must be an array) |
+|-----------------|----------|-----------------------------------------------------------|
+|*`rtes`*|True|The variable name identifying the array. This field supports an unlimited number of characters. For this example, *`rtes`* is the variable name. 
+|`name`|True|Name of an existing route. The first `name` in the array will be assigned the primary route; the second `name` in the array will be assigned the secondary, or failover, route. See [`create_new_route`](#createroute) for the steps to create a route.
+| `phoneNumber` | True     | The phone number for which to update routes. This must be a Flowroute phone number, and must use an E.164 1NPANXXXXXX format.          |
+| `routes`          | True     | The names of the primary and failover routes for the phone number listed within an array. |
 
-##### Example Usage
+##### Example usage
 	
 	rtes = [Route(name='sip-reg'), Route(name='ea4f4056663e27b082999689982e4723')]
-	tnc.update(number=12064205780, routes=rtes)
+	tnc.update(number=16476998778, routes=rtes)
 
 ### InboundRoutesController
 
@@ -393,27 +400,55 @@ The Inbound Routes Controller contains the methods required to view all of your 
 
 The list method is used to return all of the existing inbound routes from your Flowroute account.
 
-| Parameter | Required | Usage                                            |
-|-----------|----------|--------------------------------------------------|
-| limit     | False    | Controls the number of items returned (Max 200)  |
-| page      | False    | Determines which page of the results is returned |
-
-##### Example Usage
+##### Usage
 
 	irc.list()
-	
-#### create\_new\_route(self,route_name,mtype,value)
 
-The create\_new\_route method is used to create a new inbound route.
-
-| Parameter | Required | Usage                                                                                   |
-|-----------|----------|-----------------------------------------------------------------------------------------|
-| route_name | True     | The name you would like to assign to the new route (supports alphanumeric characters)   |
-| mtype      | True     | The type of route you would like to create. Valid options are "HOST", "PSTN", and "URI" |
-| value     | True     | The actual route that you would like to create                                          |
+| Parameter | Required | Usage                                            |
+|-----------|----------|--------------------------------------------------|
+| limit     | False    | Sets the number of items returned. The maximum number is `200`. If no limit is set, `10` is used as a default. |
+| page      | False    | Sets which page of the results is returned. For example, if this parameter is set to `1`, page 1 of the results is returned when the method is run. |
 
 ##### Example Usage
 
-	irc.create_new_route(route_name='PSTNroute1',mtype='PSTN',value='18002364455')	
+	irc.list(limit=2,page=1)
+
+#####Example response
+	
+	{u'routes': {u'PSTNroute1': {u'type': u'PSTN', u'value': u'16476998778'}, 
+	u'sip-reg': {u'type': u'SIP-REG', u'value': None}}}
+	
+#### `create_new_route(self,route_name,mtype,value)`<a name="createroute"></a>
+
+The `create_new_route` endpoint is used to create a new inbound route. An inbound route can then be assigned as either a primary or failover route for a phone number. See [`update`](#updateroute) for the steps to update primary and failover routes.
+
+| Parameter | Required | Usage                                                                                   |
+|-----------|----------|---------------------------------------------------------------|
+| route_name | True     | The name of the new route. This field supports an unlimited number of alphanumeric characters.  |
+| mtype      | True     | The type of route. Valid options are `HOST`, `PSTN`, and `URI` |
+| value     | True     | Value of the route, dependent on the `type`. If the `type` is `HOST`, the value must be an IP address or URL with an optional port number—for example, an IP address could be `24.239.23.40:5060` or a URL could be `myphone.com`. If no port is specified, the server will attempt to use DNS SRV records. If the type is `PSTN`, the value must be formatted as a valid E.164, 11-digit formatted North American phone number—for example,`16476998778`. If the type is `URI`, the value must be formatted as  `protocol:user@domain[:port][;transport=<tcp/udp>`—for example, `sip:alice@atlanta.com`,  `sip:16476998778@215.122.69.152:5060;transport=tcp`, or `sips:securecall@securedserver.com`.|                                          |
+
+##### Example Usage
+
+	irc.create_new_route(route_name='PSTNroute1',mtype='PSTN',value='16476998778')
 	irc.create_new_route(route_name='HOSTroute1',mtype='HOST',value='24.239.23.40:5060')
-	irc.create_new_route(route_name='URIroute1',mtype='URI',value='sip:120664480000@215.122.69.152:5060')
+	irc.create_new_route(route_name='URIroute1',mtype='URI',value='sip:16476998778@215.122.69.152:5060')
+	
+#####Example response
+
+`''` is returned for each successfully created route; no other code or message is returned.
+ 
+	irc.create_new_route(route_name='PSTNroute1',mtype='PSTN',value='16476998778')
+	''
+	irc.create_new_route(route_name='HOSTroute1',mtype='HOST',value='24.239.23.40:5060')
+	''
+	irc.create_new_route(route_name='URIroute1',mtype='URI',value='sip:16476998778@215.122.69.152:5060')
+	''
+
+#####Error response
+The following error can be returned:
+
+| Error code | Message  | Description                                           |
+|------------|----------|-------------------------------------------------------|
+|Bad request  |`{}`|Typically this occurs when an incorrect number of digits was passed for the telephone number. The number must use E.164, 11-digit `1NPANXXXXXXXXX` format.|
+|No error code|HTTP Response Not OK|Typically this occurs when a `value` is malformed. Check the formatting of the field.|
