@@ -373,19 +373,19 @@ The following error can be returned:
 
 #### `update(self,number,routes)`<a name="updateroute"></a>
 
-The update method is used to update both the primary and failover route for a phone number. Both the primary and failover route must be specified inside of an array. See **Example usage** below. The first route name within the array is assigned as the primary route; the second route listed in the array will be the failover route in the event the first route is unavailable. The list of available route names can be retrieved by using the list method in the InboundRoutesController.
+The update method is used to update both the primary and failover route for a phone number, specified within an array. See **Example usage** below. The first route name within the array is assigned as the primary route; the second route listed in the array will be the failover route in the event the first route is unavailable. The list of available route names can be retrieved by using the [`list`](#listroutes) endpoint.
 
 #####Usage
 
-`rtes = [Route(name='primary route'), Route(name='failover route')]`
-`tnc.update(number=phoneNumber, routes=rtes)`
+`route variable = [Route(name='primary route'), Route(name='failover route')]`
+`tnc.update(number=phoneNumber, routes=route variable)`
 
 | Parameter       | Required | Usage                                                                  |
 |-----------------|----------|-----------------------------------------------------------|
-|*`rtes`*|True|The variable name identifying the array. This field supports an unlimited number of characters. For this example, *`rtes`* is the variable name. 
+|`route variable`|True|The variable name identifying the array. This field supports an unlimited number of characters. For this example, *`rtes`* is the variable name. 
 |`name`|True|Name of an existing route. The first `name` in the array will be assigned the primary route; the second `name` in the array will be assigned the secondary, or failover, route. See [`create_new_route`](#createroute) for the steps to create a route.
 | `phoneNumber` | True     | The phone number for which to update routes. This must be a Flowroute phone number, and must use an E.164 1NPANXXXXXX format.          |
-| `routes`          | True     | The names of the primary and failover routes for the phone number listed within an array. |
+| `routes=rtes`          | True     | The name assigned to the `route variable` value above. For this example, the name of the variable is *`rtes`*. |
 
 ##### Example usage
 	
@@ -396,9 +396,9 @@ The update method is used to update both the primary and failover route for a ph
 
 The Inbound Routes Controller contains the methods required to view all of your existing inbound routes and to create new inbound routes.
 
-#### list(self,limit=None,page=None)
+#### `list(self,limit=None,page=None)`<a name"listroutes"></a>
 
-The list method is used to return all of the existing inbound routes from your Flowroute account.
+The list method is used to return all of the existing inbound routes from your Flowroute account. From the list, you can retrieve the names and types of routes to apply to or update a phone number.
 
 ##### Usage
 
