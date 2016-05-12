@@ -82,7 +82,7 @@ The method takes the following parameter:
 
 | Parameter | Required | Usage                                 |
 |-----------|----------|---------------------------------------|
-| `limit`  | True    | Controls the number of items returned. The number must be `1` (one) to `200`.  |
+| `(limit=x)`  | True    | Controls the number of items returned, where `x` is a number between `1` (one) to `200`.  |
 
 ##### Example Usage
 The following example passes `2` as the number of items to return. 
@@ -93,7 +93,7 @@ The following example passes `2` as the number of items to return.
 
 Results are returned in numerical order, starting with the lowest NPA number.
 
->**Note:** The following response is formatted only to provide an example of what the output can include. It is not intended to show the output in your installation.
+>**Note:** The following response is formatted only to provide an example of what the output can include. It is not intended to show the output in your environment.
 
 	{
  	 "npas": {
@@ -125,7 +125,7 @@ The `list_area_and_exchange()` method retrieves a list of every NPA-NXX (area co
 #####Usage
 `pnc.list_area_and_exchange()`
 
-The method can take the following parameters:
+The method takes the following parameters:
 
 | Parameter | Required | Usage                                                         |
 |-----------|----------|---------------------------------------------------------------|
@@ -167,14 +167,14 @@ The following error can be returned:
 |No error code.  |Response Not OK|This error is most commonly returned when the number passed for the limit is greater than the allowed maximum of 200.|
 |500  |Application Error|This error is most commonly returned when `0` is passed for the `limit`.|
 
-### `search(self,limit=None,              npa=None,nxx=None,page=None,ratecenter=None,state=None,tn=None)`
+### `search(self,limit=None,           npa=None,nxx=None,page=None,ratecenter=None,state=None,tn=None)`
 
-The search method is is used to search by NPA, NXX, Ratecenter, State, or TN (telephone number). 
+The `search` method is is used to search by NPA, NXX, Ratecenter, State, or TN (telephone number). 
 ##### Usage
 
 	pnc.search()
 
-The method can take the following parameters:
+The method takes the following parameters:
 
 | Parameter  | Required                       | Usage                                                                     
 |------------|--------------------------------|--------------------------------------------------------------|
@@ -220,7 +220,7 @@ Parameter | Description                                             |
 | | <ul>`monthly_cost`- The recurring monthly cost to maintain that telephone number. The default value is USD `1.25`.</ul>|
 ||	`state`- The US State or Canadian territory in which the NPA/NXX is located.|
 ||	`ratecenter`- The ratecenter associated with the NPA/NXX.</ol>|
-||	`billing_methods`- Displays the two billing methods for the telephone number: `VPRI` or `METERED`.  |
+||	`billing_methods`- Displays the billing methods available for the telephone number: <ul><li>`VPRI`, or</ul></li> <ul><li>`METERED` </ul></li> |
 	
 ##TelephoneNumbersController
 
@@ -268,7 +268,7 @@ The `list_account_telephone_numbers` method is used to retrieve a list of all of
 
 `tnc.list_account_telephone_numbers()`
 
-The method can take the following parameters:
+The method takes the following parameters:
 
 | Parameter | Required | Usage                                                     |
 |-----------|----------|-----------------------------------------------------------|
@@ -310,8 +310,8 @@ The method can take the following parameters:
 | `tns`  | The telephone number retrieved from the request; it is composed of the following *`telephonenumber`* object.|                           |
 || <ul>*`telephone number`*- The telephone number you own. This object is further composed of `routes`:|
 | |<ul><ul>`routes`- Defines the parameters of the route. Composed of the following:</ul>
-| |	<ul><ul><ul>`type`- Indicates the type of route: `HOST`, `PSTN`, `URI`, or `SIP-REG`. `SIP-REG` is the default name assigned to the route if none is assigned.
-| |<ul> <ul><ul>`name`- Name of the route. If no `name` was given to the route, `sip-reg` is the assigned default name.</ul>
+| |	<ul><ul><ul><li>`type`- Indicates the type of route: `HOST`, `PSTN`, `URI`, or `SIP-REG`. `SIP-REG` is the default name assigned to the route if none is assigned.
+| |<ul> <ul><ul><li>`name`- Name of the route. If no `name` was given to the route, `sip-reg` is the assigned default name.</ul>
 ||<ul>`billing_method`- Either `VPRI` or `METERED`.
 ||<ul>`detail`- Provides more detail that can be passed when using the `telephone_number_details` method below. </ul>|
 
@@ -320,7 +320,7 @@ The following error can be returned:
 
 | Error code | Message  | Description                                                 |
 |------------|----------|-------------------------------------------------------|
-|  No error code. |`{}`|The telephone number passed in the method does not contain the correct number of digits. It must use an 11-digit, `1NPANXXXXXXXXX1` format.
+|  No error code. |`{}`|The telephone number passed in the method does not contain the correct number of digits. It must use an E.164 11-digit, `1NPANXXXXXXXXX1` format.
 
 	
 #### `telephone_number_details(self,telephone_number)`
@@ -331,11 +331,11 @@ The `telephone_number_details` method is used to retrieve the billing method, pr
 
 `tnc.telephone_number_details()`
 
-The method can take the following parameter:
+The method takes the following parameter:
 
 | Parameter       | Required | Usage                                             |
 |-----------------|----------|---------------------------------------------------|
-| `telephone_number_details` | True     | The telephone number on which to query.  |
+| `telephone_number_details()` | True     | The telephone number on which to query. This must be a Flowroute number on your account, and must use an E.164 1NPANXXXXXX format. |
 
 ##### Example Usage
 
@@ -360,8 +360,8 @@ The method can take the following parameter:
 |Parameter | Description                                         |
 |--------|-------------------------------------------------------|
 | `routes`  | The routes associated with the telephone number; it is composed of the following:
-| |	<ul>`type`- Indicates the type of route: `HOST`, `PSTN`, `URI`, or `SIP-REG`. `SIP-REG` is the default name assigned to the route if none is assigned. A route `type` can be created using the [`create_new_route`](#createroute) endpoint.
-| |<ul> `name`- Name of the route. If no `name` was given to the route, `sip-reg` is the assigned default name. A `name` is assigned to a route when the route is created.</ul>
+| |	<ul><li>`type`- Indicates the type of route: `HOST`, `PSTN`, `URI`, or `SIP-REG`. `SIP-REG` is the default name assigned to the route if none is assigned. A route `type` can be created using the [`create_new_route`](#createroute) endpoint.</li>
+| |<ul> <li>`name`- Name of the route. If no `name` was given to the route, `sip-reg` is the assigned default name. A `name` is assigned to a route when the route is created.</ul></li>
 |`billing_method`| Either `VPRI` or `METERED`.|
 
 #####Error response
@@ -373,12 +373,14 @@ The following error can be returned:
 
 #### `update(self,number,routes)`<a name="updateroute"></a>
 
-The update method is used to update both the primary and failover route for a phone number, specified within an array. See **Example usage** below. The first route name within the array is assigned as the primary route; the second route listed in the array will be the failover route in the event the first route is unavailable. The list of available route names can be retrieved by using the [`list`](#listroutes) endpoint.
+The `update` method is used to update both the primary and failover route for a phone number, specified within an array. See **Example usage** below. The first route name within the array is assigned as the primary route; the second route listed in the array will be the failover route in the event the first route is unavailable. The list of available route names can be retrieved by using the [`list`](#listroutes) endpoint.
 
 #####Usage
 
 `route variable = [Route(name='primary route'), Route(name='failover route')]`
 `tnc.update(number=phoneNumber, routes=route variable)`
+
+The method takes the following parameters:
 
 | Parameter       | Required | Usage                                                                  |
 |-----------------|----------|-----------------------------------------------------------|
@@ -398,11 +400,13 @@ The Inbound Routes Controller contains the methods required to view all of your 
 
 #### `list(self,limit=None,page=None)`<a name"listroutes"></a>
 
-The list method is used to return all of the existing inbound routes from your Flowroute account. From the list, you can retrieve the names and types of routes to apply to or update a phone number.
+The `list` method is used to return all of the existing inbound routes from your Flowroute account. From the list, you can retrieve the names and types of routes when applying a route to a phone number or updating an existing route on a phone number.
 
 ##### Usage
 
 	irc.list()
+
+The method takes the following parameters:
 
 | Parameter | Required | Usage                                            |
 |-----------|----------|--------------------------------------------------|
@@ -425,7 +429,9 @@ The list method is used to return all of the existing inbound routes from your F
 	
 #### `create_new_route(self,route_name,mtype,value)`<a name="createroute"></a>
 
-The `create_new_route` endpoint is used to create a new inbound route. An inbound route can then be assigned as either a primary or failover route for a phone number. See [`update`](#updateroute) for the steps to update primary and failover routes.
+The `create_new_route` method is used to create a new inbound route. An inbound route can then be assigned as either a primary or failover route for a phone number. See [`update`](#updateroute) for the steps to update primary and failover routes.
+
+The method takes the following parameters:
 
 | Parameter | Required | Usage                                                                                   |
 |-----------|----------|---------------------------------------------------------------|
