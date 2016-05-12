@@ -446,7 +446,7 @@ The `create_new_route` endpoint is used to create a new inbound route. An inboun
 	''
 
 #####Error response
-The following error can be returned:
+The following errors can be returned:
 
 | Error code | Message  | Description                                           |
 |------------|----------|-------------------------------------------------------|
