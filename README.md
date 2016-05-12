@@ -377,7 +377,7 @@ The update method is used to update both the primary and failover route for a ph
 
 #####Usage
 
-`rtes = [Route(name=`primary route`), Route(name=`secondary route`)]`
+`rtes = [Route(name='primary route'), Route(name='failover route')]`
 `tnc.update(number=phoneNumber, routes=rtes)`
 
 | Parameter       | Required | Usage                                                                  |
