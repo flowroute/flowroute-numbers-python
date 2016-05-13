@@ -320,7 +320,7 @@ The following error can be returned:
 
 | Error code | Message  | Description                                                 |
 |------------|----------|-------------------------------------------------------|
-|  No error code. |`{}`|The telephone number passed in the method does not contain the correct number of digits. It must use an E.164 11-digit, `1NPANXXXXXXXXX1` format.
+|  No error code. |`{}`|The telephone number passed in the method does not contain the correct number of digits. It must use an E.164 11-digit, `1NPANXXXXXX` format.
 
 	
 #### `telephone_number_details(self,telephone_number)`
@@ -369,7 +369,7 @@ The following error can be returned:
 
 | Error code | Message  | Description                                           |
 |------------|----------|-------------------------------------------------------|
-|No error code.  |`{}`|An incorrect number of digits was passed for the telephone number. The number must use E.164, 11-digit `1NPANXXXXXXXXX` format.|
+|No error code.  |`{}`|An incorrect number of digits was passed for the telephone number. The number must use E.164, 11-digit `1NPANXXXXXX` format.|
 
 #### `update(self,number,routes)`<a name="updateroute"></a>
 
@@ -410,8 +410,8 @@ The method takes the following parameters:
 
 | Parameter | Required | Usage                                            |
 |-----------|----------|--------------------------------------------------|
-| limit     | False    | Sets the number of items returned. The maximum number is `200`. If no limit is set, `10` is used as a default. |
-| page      | False    | Sets which page of the results is returned. For example, if this parameter is set to `1`, page 1 of the results is returned when run. |
+| `limit`     | False    | Sets the number of items returned. The maximum number is `200`. If no limit is set, `10` is used as a default. |
+| `page`      | False    | Sets which page of the results is returned. For example, if this parameter is set to `1`, page 1 of the results is returned when run. |
 
 ##### Example Usage
 
@@ -435,9 +435,9 @@ The method takes the following parameters:
 
 | Parameter | Required | Usage                                                                                   |
 |-----------|----------|---------------------------------------------------------------|
-| route_name | True     | The name of the new route. This field supports an unlimited number of alphanumeric characters.  |
-| mtype      | True     | The type of route. Valid options are `HOST`, `PSTN`, and `URI` |
-| value     | True     | Value of the route, dependent on the `type`: <ul><li>If `HOST`, the value must be an IP address or URL with an optional port number—for example, an IP address could be `24.239.23.40:5060` or a URL could be `myphone.com`. If no port is specified, the server will attempt to use DNS SRV records. <li>If `PSTN`, the value must be formatted as a valid E.164, 11-digit formatted North American phone number—for example,`16476998778`. <li>If `URI`, the value must be formatted as  `protocol:user@domain[:port][;transport=<tcp/udp>`—for example, `sip:alice@atlanta.com`,  `sip:16476998778@215.122.69.152:5060;transport=tcp`, or `sips:securecall@securedserver.com`.</li></ul>|                                        |
+| `route_name` | True     | The name of the new route. This field supports an unlimited number of alphanumeric characters.  |
+| `mtype`      | True     | The type of route. Valid options are `HOST`, `PSTN`, and `URI` |
+| `value`     | True     | Value of the route, dependent on the `type`: <ul><li>If `HOST`, the value must be an IP address or URL with an optional port number—for example, an IP address could be `24.239.23.40:5060` or a URL could be `myphone.com`. If no port is specified, the server will attempt to use DNS SRV records. <li>If `PSTN`, the value must be formatted as a valid E.164, 11-digit formatted North American phone number—for example,`16476998778`. <li>If `URI`, the value must be formatted as  `protocol:user@domain[:port][;transport=<tcp/udp>`—for example, `sip:alice@atlanta.com`,  `sip:16476998778@215.122.69.152:5060;transport=tcp`, or `sips:securecall@securedserver.com`.</li></ul>|                                        |
 
 ##### Example Usage
 
@@ -447,7 +447,7 @@ The method takes the following parameters:
 	
 #####Example response
 
-`''` is returned for each successfully created route; no other code or message is returned.
+An empty string (`''`) is returned for each successfully created route; no other code or message is returned. An error encountered for a specific `create_new_route` line will not prevent the other routes from being created.
  
 	irc.create_new_route(route_name='PSTNroute1',mtype='PSTN',value='16476998778')
 	''
@@ -462,4 +462,4 @@ The following errors can be returned:
 | Error code | Message  | Description                                           |
 |------------|----------|-------------------------------------------------------|
 |Bad request  |`{}`|Typically this occurs when an incorrect number of digits was passed for the telephone number. The number must use E.164, 11-digit `1NPANXXXXXXXXX` format.|
-|No error code|HTTP Response Not OK|Typically this occurs when a `value` is malformed. Check the formatting of the field.|
+|No error code|HTTP Response Not OK|Typically this occurs when a `value` is malformed. |
