@@ -3,9 +3,8 @@
 """
    FlowrouteNumbersLib.Controllers.PurchasablePhoneNumbersController
 
-   This file was automatically generated for flowroute by APIMATIC BETA v2.0 on 02/08/2016
+   Copyright Flowroute, Inc. 2016
 """
-import unirest
 
 from FlowrouteNumbersLib.APIHelper import APIHelper
 from FlowrouteNumbersLib.Configuration import Configuration
@@ -15,11 +14,10 @@ from FlowrouteNumbersLib.CustomAuthUtility import CustomAuthUtility
 
 class PurchasablePhoneNumbersController(object):
 
-
     """A Controller to access Endpoints in the FlowrouteNumbersLib API."""
 
-    def list_area_and_exchange(self,
-                               limit=None,
+    @staticmethod
+    def list_area_and_exchange(limit=None,
                                npa=None,
                                page=None):
         """Does a GET request to /available-tns/npanxxs/.
@@ -61,19 +59,14 @@ class PurchasablePhoneNumbersController(object):
 
         # Prepare headers
         headers = {
-
             "user-agent": "Flowroute SDK 1.0",
             "accept": "application/json",
-
         }
 
-        #append custom auth authorization
-        #CustomAuthUtility.appendCustomAuthParams(headers)
-
         # Prepare and invoke the API call request to fetch the response
-        #response = unirest.get(query_url, headers=headers)
         response = CustomAuthUtility.appendCustomAuthParams(method='GET',
-            query_url=query_url, headers=headers)
+                                                            query_url=query_url,
+                                                            headers=headers)
 
         # Error handling using HTTP status codes
         if response.code == 400:
@@ -87,8 +80,8 @@ class PurchasablePhoneNumbersController(object):
         
         return response.body
 
-    def list_available_np_as(self,
-                             limit):
+    @staticmethod
+    def list_available_np_as(limit=200):
         """Does a GET request to /available-tns/npas/.
 
         Retrieves a list of all NPAs (area codes) that contain purchasable
@@ -117,6 +110,7 @@ class PurchasablePhoneNumbersController(object):
         query_parameters = {
             "limit": limit
         }
+
         query_builder = APIHelper.append_url_with_query_parameters(query_builder, query_parameters)
 
         # Validate and preprocess url
@@ -124,19 +118,14 @@ class PurchasablePhoneNumbersController(object):
 
         # Prepare headers
         headers = {
-
             "user-agent": "Flowroute SDK 1.0",
             "accept": "application/json",
-
         }
 
-        #append custom auth authorization
-        #CustomAuthUtility.appendCustomAuthParams(headers)
-
         # Prepare and invoke the API call request to fetch the response
-        #response = unirest.get(query_url, headers=headers)
         response = CustomAuthUtility.appendCustomAuthParams(method='GET',
-            query_url=query_url, headers=headers)
+                                                            query_url=query_url,
+                                                            headers=headers)
 
         # Error handling using HTTP status codes
         if response.code == 400:
@@ -150,8 +139,8 @@ class PurchasablePhoneNumbersController(object):
         
         return response.body
 
-    def search(self,
-               limit=None,
+    @staticmethod
+    def search(limit=None,
                npa=None,
                nxx=None,
                page=None,
@@ -203,6 +192,7 @@ class PurchasablePhoneNumbersController(object):
             "state": state,
             "tn": tn
         }
+
         query_builder = APIHelper.append_url_with_query_parameters(query_builder, query_parameters)
 
         # Validate and preprocess url
@@ -210,19 +200,14 @@ class PurchasablePhoneNumbersController(object):
 
         # Prepare headers
         headers = {
-
             "user-agent": "Flowroute SDK 1.0",
             "accept": "application/json",
-
         }
 
-        #append custom auth authorization
-        #CustomAuthUtility.appendCustomAuthParams(headers)
-
         # Prepare and invoke the API call request to fetch the response
-        #response = unirest.get(query_url, headers=headers)
         response = CustomAuthUtility.appendCustomAuthParams(method='GET',
-            query_url=query_url, headers=headers)
+                                                            query_url=query_url,
+                                                            headers=headers)
 
         # Error handling using HTTP status codes
         if response.code == 400:

@@ -3,9 +3,8 @@
 """
    FlowrouteNumbersLib.Controllers.TelephoneNumbersController
 
-   This file was automatically generated for flowroute by APIMATIC BETA v2.0 on 02/08/2016
+   Copyright Flowroute, Inc. 2016
 """
-import unirest
 
 from FlowrouteNumbersLib.APIHelper import APIHelper
 from FlowrouteNumbersLib.Configuration import Configuration
@@ -15,11 +14,9 @@ from FlowrouteNumbersLib.CustomAuthUtility import CustomAuthUtility
 
 class TelephoneNumbersController(object):
 
-
     """A Controller to access Endpoints in the FlowrouteNumbersLib API."""
-
-    def telephone_number_details(self,
-                                 telephone_number):
+    @staticmethod
+    def telephone_number_details(telephone_number):
         """Does a GET request to /tns/{telephone_number}.
 
         Returns the routing and billing information for the specified
@@ -55,18 +52,13 @@ class TelephoneNumbersController(object):
 
         # Prepare headers
         headers = {
-
             "user-agent": "Flowroute SDK 1.0",
-
         }
 
-        #append custom auth authorization
-        #CustomAuthUtility.appendCustomAuthParams(headers)
-
         # Prepare and invoke the API call request to fetch the response
-        #response = unirest.get(query_url, headers=headers)
         response = CustomAuthUtility.appendCustomAuthParams(method='GET',
-            query_url=query_url, headers=headers)
+                                                            query_url=query_url,
+                                                            headers=headers)
 
         # Error handling using HTTP status codes
         if response.code == 400:
@@ -80,9 +72,8 @@ class TelephoneNumbersController(object):
         
         return response.body
 
-    def purchase(self,
-                 billing,
-                 number):
+    @staticmethod
+    def purchase(billing, number):
         """Does a PUT request to /tns/{number}.
 
         Purchases the telephone number indicated by the request URI, with the
@@ -120,22 +111,18 @@ class TelephoneNumbersController(object):
 
         # Prepare headers
         headers = {
-
             "user-agent": "Flowroute SDK 1.0",
             "content-type": "application/json; charset=utf-8",
-
         }
+
         # Quick kwargs setting
-        #body = '{"billing_method": "%s"}' % billing
         body = APIHelper.json_serialize(billing)
 
-        #append custom auth authorization
-        #CustomAuthUtility.appendCustomAuthParams(headers)
-
         # Prepare and invoke the API call request to fetch the response
-        #response = unirest.put(query_url, headers=headers,  params=APIHelper.json_serialize(billing))
         response = CustomAuthUtility.appendCustomAuthParams(method='PUT',
-            query_url=query_url, body=body, headers=headers)
+                                                            query_url=query_url,
+                                                            body=body,
+                                                            headers=headers)
 
         # Error handling using HTTP status codes
         if response.code == 400:
@@ -149,8 +136,8 @@ class TelephoneNumbersController(object):
         
         return response.body
 
-    def list_account_telephone_numbers(self,
-                                       limit=None,
+    @staticmethod
+    def list_account_telephone_numbers(limit=None,
                                        page=None,
                                        pattern=None):
         """Does a GET request to /tns/.
@@ -185,6 +172,7 @@ class TelephoneNumbersController(object):
             "page": page,
             "pattern": pattern
         }
+
         query_builder = APIHelper.append_url_with_query_parameters(query_builder, query_parameters)
 
         # Validate and preprocess url
@@ -192,19 +180,14 @@ class TelephoneNumbersController(object):
 
         # Prepare headers
         headers = {
-
             "user-agent": "Flowroute SDK 1.0",
             "accept": "application/json",
-
         }
 
-        #append custom auth authorization
-        #CustomAuthUtility.appendCustomAuthParams(headers)
-
         # Prepare and invoke the API call request to fetch the response
-        #response = unirest.get(query_url, headers=headers)
         response = CustomAuthUtility.appendCustomAuthParams(method='GET',
-            query_url=query_url, headers=headers)
+                                                            query_url=query_url,
+                                                            headers=headers)
 
         # Error handling using HTTP status codes
         if response.code == 400:
@@ -218,9 +201,8 @@ class TelephoneNumbersController(object):
         
         return response.body
 
-    def update(self,
-               number,
-               routes):
+    @staticmethod
+    def update(number, routes):
         """Does a PATCH request to /tns/{number}.
 
         Updates the routing information for a telephone number on your
@@ -261,21 +243,17 @@ class TelephoneNumbersController(object):
 
         # Prepare headers
         headers = {
-
             "user-agent": "Flowroute SDK 1.0",
             "content-type": "application/json; charset=utf-8",
-
         }
         routes = APIHelper.json_serialize(routes)
         body = '{"routes": %s}' % routes
 
-        #append custom auth authorization
-        #CustomAuthUtility.appendCustomAuthParams(headers)
-
         # Prepare and invoke the API call request to fetch the response
-        #response = unirest.patch(query_url, headers=headers,  params=APIHelper.json_serialize(routes))
         response = CustomAuthUtility.appendCustomAuthParams(method='PATCH',
-            query_url=query_url, body=body, headers=headers)
+                                                            query_url=query_url,
+                                                            body=body,
+                                                            headers=headers)
 
         # Error handling using HTTP status codes
         if response.code == 400:
