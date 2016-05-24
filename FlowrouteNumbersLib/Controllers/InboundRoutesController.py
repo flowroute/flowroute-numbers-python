@@ -3,9 +3,8 @@
 """
    FlowrouteNumbersLib.Controllers.InboundRoutesController
 
-   This file was automatically generated for flowroute by APIMATIC BETA v2.0 on 02/08/2016
+   Copyright Flowroute, Inc. 2016
 """
-import unirest
 
 from FlowrouteNumbersLib.APIHelper import APIHelper
 from FlowrouteNumbersLib.Configuration import Configuration
@@ -15,12 +14,10 @@ from FlowrouteNumbersLib.CustomAuthUtility import CustomAuthUtility
 
 class InboundRoutesController(object):
 
-
     """A Controller to access Endpoints in the FlowrouteNumbersLib API."""
 
-    def list(self,
-             limit=None,
-             page=None):
+    @staticmethod
+    def list(limit=None, page=None):
         """Does a GET request to /routes/.
 
         TODO: type endpoint description here.
@@ -57,19 +54,14 @@ class InboundRoutesController(object):
 
         # Prepare headers
         headers = {
-
             "user-agent": "Flowroute SDK 1.0",
             "accept": "application/json",
-
         }
 
-        #append custom auth authorization
-        #CustomAuthUtility.appendCustomAuthParams(headers)
-
         # Prepare and invoke the API call request to fetch the response
-        #response = unirest.get(query_url, headers=headers)
         response = CustomAuthUtility.appendCustomAuthParams(method='GET',
-            query_url=query_url, headers=headers)
+                                                            query_url=query_url,
+                                                            headers=headers)
 
         # Error handling using HTTP status codes
         if response.code == 400:
@@ -83,10 +75,8 @@ class InboundRoutesController(object):
         
         return response.body
 
-    def create_new_route(self,
-                         route_name,
-                         mtype,
-                         value):
+    @staticmethod
+    def create_new_route(route_name, mtype, value):
         """Does a PUT request to /routes/{route_name}.
 
         Create a new inbound route to be used by a phone number
@@ -122,21 +112,17 @@ class InboundRoutesController(object):
 
         # Prepare headers
         headers = {
-
             "user-agent": "Flowroute SDK 1.0",
             "content-type": "application/json; charset=utf-8",
-
         }
 
         body = '{"type": "%s", "value": "%s"}' % (mtype, value)
 
-        #append custom auth authorization
-        #CustomAuthUtility.appendCustomAuthParams(headers)
-
         # Prepare and invoke the API call request to fetch the response
-        #response = unirest.put(query_url, headers=headers,  params=mtype)
         response = CustomAuthUtility.appendCustomAuthParams(method='PUT',
-            query_url=query_url, body=body, headers=headers)
+                                                            query_url=query_url,
+                                                            body=body,
+                                                            headers=headers)
 
         # Error handling using HTTP status codes
         if response.code == 400:
