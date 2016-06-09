@@ -308,7 +308,7 @@ Parameter | Description                                             |
 	
 ##TelephoneNumbersController<a name=telephonecontroller></a>
 
-The Telephone Numbers Controller contains all of the methods necessary to purchase a new phone number and to manage your owned phone number inventory. Methods must be added to a PHP file and that file run from a command line. For example, you can create a **numbers.py** file that contains the following base information:
+The TelephoneNumbersController supports all of the methods necessary to purchase a new phone number and to manage your owned phone number inventory. Methods must be added to a PHP file and that file run from a command line. For example, you can create a **numbers.py** file that contains the following base information:
 
 	from FlowrouteNumbersLib.Controllers.TelephoneNumbersController import *
 	from FlowrouteNumbersLib.Models import *  
