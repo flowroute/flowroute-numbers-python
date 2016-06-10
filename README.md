@@ -27,7 +27,7 @@ To create and send a message, you will need your Flowroute phone number, which s
 
 The SDK uses the **Unirest** and **jsonpickle** Python libraries, which must be installed before you can use the SDK. 
 
-> **Note:** You must be connected to the Internet in order to install the required libraries.
+> **Important:** The SDK supports only Python 2.x. Python 1.x and 3.x are not supported.
 
 1. Open a terminal session. 
 
