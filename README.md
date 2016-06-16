@@ -75,7 +75,7 @@ The following describes importing the SDK and setting up your API credentials. I
 		tnc = TelephoneNumbersController()
 		irc = InboundRoutesController()
 
-6.	Optionally, add a line that prints out a response when parameters are passed to a method, allowing you to see the results onscreen of an invoked method.
+6.	Optionally, add a line that prints out a response when parameters are passed to a method, allowing you to see a response in the terminal window for invoked method.
 
 		print (response)
 
@@ -193,7 +193,7 @@ The following example limits the number of items to return to `2`.
 	#List Available NPAs
 	response = pnc.list_available_np_as(limit=2)
 
-#####Example response
+##### Example response
 
 Results are returned in numerical order, starting with the lowest number NPA.
 
@@ -212,7 +212,7 @@ Results are returned in numerical order, starting with the lowest number NPA.
   	  "next": "/v1/available-tns/npas/?limit=2&page=2"
 	  }
 	}
-#####Error response
+##### Error response
 
 | Error code | Message  | Description                                                 |
 |------------|----------|-------------------------------------------------------|
@@ -223,13 +223,12 @@ Results are returned in numerical order, starting with the lowest number NPA.
 
 The `list_area_and_exchange()` method retrieves a list of every NPANXX (area code and exchange) available in Flowroute's phone number inventory.
 
-#####Usage
+##### Usage
 
 Add the following lines to your Python file:
 
 	#List NPA and NXX
 	response = pnc.list_area_and_exchange(limit=None,npa=None,page=None)
-
 
 The method takes the following parameters:
 
@@ -246,7 +245,7 @@ The following example sets the `limit` the results to `2`, the `npa` to `206`, a
 	#List NPA and NXX
 	response = pnc.list_area_and_exchange(limit=2,npa=106,page=2)
 
-#####Example response
+##### Example response
 
 Results are returned in numerical order, starting with the lowest NPA number. The `npaxxs` parameter variable is formatted as a combination of the NPA and NXX. In the following example, `206258` is the combination of NPA `206` and NXX `258`. 
 
@@ -267,7 +266,7 @@ Results are returned in numerical order, starting with the lowest NPA number. Th
 
 >**Note:** If no results are found based on the passed parameters, `{}` is returned as a response.
 
-#####Error response
+##### Error response
 
 | Error code | Message  | Description                                                 |
 |------------|----------|-------------------------------------------------------|
@@ -304,7 +303,7 @@ In the following example, a search request sets the `limit` to `1`, the `npa` to
 		#Search
 		response = pnc.search(limit=1,npa=206,nxx=743,page=1,ratecenter='seattle',state='wa',tn=None)
 
-#####Example response
+##### Example response
 
 Based on the parameters passed above, the following result is returned:
 
@@ -328,7 +327,7 @@ Based on the parameters passed above, the following result is returned:
 	
 >**Note:** If no results are found based on the passed parameters, `{}` is returned as a response.
 
-#####Response field descriptions
+##### Response field descriptions
 
 The following fields are returned in the response:
 
@@ -342,7 +341,7 @@ Parameter | Description                                             |
 ||	`ratecenter`- The ratecenter associated with the NPA NXX.</ol>|
 ||	`billing_methods`- Displays the billing methods available for the telephone number: <ul><li>`VPRI`, or</ul></li> <ul><li>`METERED` </ul></li> |
 
-#####Error response
+##### Error response
 
 | Error code | Message  | Description                                           |
 |------------|----------|-------------------------------------------------------|
@@ -350,7 +349,7 @@ Parameter | Description                                             |
 	
 ##TelephoneNumbersController<a name=telephonecontroller></a>
 
-The TelephoneNumbersController supports all of the methods necessary to purchase a new phone number and to manage your owned phone number inventory. Methods are added to a Python file, and then that file run from a command line. The following shows a sample file named **phonenumbers.py** file that invokes only the TelephoneNumbersController methods:
+The TelephoneNumbersController supports all of the methods necessary to purchase a new phone number and to manage your owned phone number inventory. The following shows a sample file named **phonenumbers.py** file that invokes only the TelephoneNumbersController methods:
 
 	from FlowrouteNumbersLib.Controllers.TelephoneNumbersController import *
 	from FlowrouteNumbersLib.Models import *  
@@ -515,6 +514,8 @@ The method takes the following parameter:
 | `number` | True  | string   | The telephone number on which to query. This must be a Flowroute number on your account, and must use an E.164 1NPANXXXXXX format. |
 
 ##### Example Usage
+
+In the following example, details are requested for the telephone number just purchased using the [`purchase`](#purchasenumber) method.
 
 	"Telephone Number Details
 	response = tnc.telephone_number_details(16476998778)
