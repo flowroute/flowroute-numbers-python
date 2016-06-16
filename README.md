@@ -75,7 +75,7 @@ The following describes importing the SDK and setting up your API credentials. I
 		tnc = TelephoneNumbersController()
 		irc = InboundRoutesController()
 
-6.	Optionally, add a line that prints out a response when parameters are passed to a method, allowing you to see a response in the terminal window for invoked method.
+6.	Optionally, add a line that prints out a response after invoking a method, allowing you to see a response in the terminal window for invoked method.
 
 		print (response)
 
@@ -106,7 +106,7 @@ The following describes importing the SDK and setting up your API credentials. I
 		print (response)
 	
 	
-With this in mind, you can then decide the approach you want to take towards creating a file. You can create your own Python file in any of the following process:
+With this in mind, you can then decide the approach you want to take towards creating a file. You can create your own Python file using any of the following options:
  
  1.	Create a single file that contains all of the Controllers and methods, then commenting out the lines for each method you don't want to invoke.
  
