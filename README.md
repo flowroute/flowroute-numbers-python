@@ -89,7 +89,7 @@ The following describes importing the SDK and setting up your API credentials. I
 
 8.	Add Controller methods as needed. See [Controllers](#controllers).
 
-###Example Python file
+#####Example Python file
 
 The following shows an example of a single Python file that imports and instantiates all three Controllers:
 	
