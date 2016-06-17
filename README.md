@@ -19,7 +19,7 @@ The following are required before you can deploy the SDK.
 
 You will need your Flowroute API credentials (Access Key and Secret Key). These can be found on the **Preferences > API Control** page of the [Flowroute](https://manage.flowroute.com/accounts/preferences/api/) portal. If you do not have API credentials, contact <mailto:support@flowroute.com>.
 
-### Have a code text editor
+### Get a code text editor
 
 Steps in this SDK describe creating one or more script files that allow you to execute the methods. Script files can be created either using a terminal window shell or through using a code text editor. For example, *Sublime Text*. 
 
@@ -47,9 +47,9 @@ The SDK uses the **Unirest** and **jsonpickle** Python libraries, which must be 
 
 6.	Create a script to import the SDK.
 
-## Create a PHP file to import the Controllers and Models<a name=createphp></a>
+## Create a Python file to import the Controllers and Models<a name=create></a>
 
-The following describes importing the SDK and setting up your API credentials. Importing the SDK allows you to instantiate the [Controllers](#controllers), which contain the methods used to perform tasks with the SDK. In order to do this, you will need to create and run a PHP file. You can create the file either through using a terminal shell or through a code text editor. The sample files in this SDK were created using a code text editor. In the following example, all Controllers are instantiated using a single file:
+The following describes importing the SDK and setting up your API credentials. Importing the SDK allows you to instantiate the [Controllers](#controllers), which contain the methods used to perform tasks with the SDK. In order to do this, you will need to create and run a Python file. You can create the file either through using a terminal shell or through a code text editor. The sample files in this SDK were created using a code text editor. In the following example, all Controllers are instantiated using a single file:
 
 1.	Using a code text editor, create a new file.
 
@@ -79,7 +79,7 @@ The following describes importing the SDK and setting up your API credentials. I
 
 		print (response)
 
-	>**Important:** Throughout this SDK, `response` is used in method examples. `response` is a variable name that can be changed to a name of your own choosing. It can support an unlimited number of characters. If you choose to rename `response`, make sure that any method that references that variable name is also changed to use the new name. In the following example, `response` is changed to `blob` where ever `response` is used:
+	>**Important:** Throughout this SDK, `response` is used in method examples. `response` is a variable name that can be changed to a name of your own choosing. It can support an unlimited number of characters. If you choose to rename `response`, make sure that any method that references that variable name is also changed to use the new name. In the following example, `response` is changed to `blob` wherever `response` is used:
 >
 >`#List NPA and NXX`<br>
 >`blob = pnc.list_area_and_exchange()`<br>
@@ -89,7 +89,9 @@ The following describes importing the SDK and setting up your API credentials. I
 
 8.	Add Controller methods as needed. See [Controllers](#controllers).
 
-	The following shows an example of a single Python file that imports and instantiates all three Controllers:
+###Example Python file
+
+The following shows an example of a single Python file that imports and instantiates all three Controllers:
 	
 		from FlowrouteNumbersLib.Controllers.InboundRoutesController import *
 		from FlowrouteNumbersLib.Controllers.PurchasablePhoneNumbersController import *
@@ -106,7 +108,7 @@ The following describes importing the SDK and setting up your API credentials. I
 		print (response)
 	
 	
-With this in mind, you can then decide the approach you want to take towards creating a file. You can create your own Python file using any of the following options:
+With this in mind, you can then decide the approach you want to take towards creating a file. You can create your own Python file using any of the following processes:
  
  1.	Create a single file that contains all of the Controllers and methods, then commenting out the lines for each method you don't want to invoke.
  
@@ -128,7 +130,7 @@ To use **demo.py**, open the file with a code text editor, such as *Sublime Text
 
 ##Controllers<a name=controllers></a>
 
-**flowroute-numbers-python** supports the following Controllers:
+The following sections describe **flowroute-numbers-python** Controllers:
 
 *	[`PurchasablePhoneNumbersController`](#purchasecontroller)
 
@@ -138,9 +140,11 @@ To use **demo.py**, open the file with a code text editor, such as *Sublime Text
 
 >**Important:** The SDK displays sample responses. Formatting of the responses is provided for clarity only. They are not intended to show the formatting of your own response. 
 
-###PurchasablePhoneNumbersController<a name=purchasecontroller></a>
+###PurchasablePhoneNumbersController<a name=purchasecontroller></a> 
 
-The PurchasablePhoneNumbers Controller contains all of the methods necessary to search through Flowroute's phone number inventory. The following shows a sample file named **purchase.py** file that invokes only the PurchasablePhoneNumbersController methods.
+Location: **./flowroute-numbers-python/FlowrouteNumbersLib/Controllers**
+
+The PurchasablePhoneNumbers Controller contains all of the methods necessary to search through Flowroute's phone number inventory. The following shows a sample file named **purchase.py** file, which invokes only that Controller's methods:
 
 		from FlowrouteNumbersLib.Controllers.PurchasablePhoneNumbersController import *
 		from FlowrouteNumbersLib.Models import *
@@ -161,7 +165,9 @@ The PurchasablePhoneNumbers Controller contains all of the methods necessary to 
 		
 		print (response)
 
-When creating your own Python file, add each method after `pnc = PurchasablePhoneNumbersController()`, but before `print (response)`. If you do not want to invoke a specific method, comment out that method's lines with `#`.  Click each link to see more information about that method.
+When creating your own Python file, add each method after `pnc = PurchasablePhoneNumbersController()`, but before `print (response)`. If you do not want to invoke a specific method, comment out that method's lines with `#`.  
+
+The Controller contains the following methods:
 
 *	[`list_available_np_as`](#listnpas)
 
@@ -188,7 +194,7 @@ The method takes the following parameter:
 
 ##### Example Usage
 
-The following example limits the number of items to return to `2`. 
+The following example limits the number of NPAs returned to `2`: 
 
 	#List Available NPAs
 	response = pnc.list_available_np_as(limit=2)
@@ -347,7 +353,9 @@ Parameter | Description                                             |
 |------------|----------|-------------------------------------------------------|
 |No error code|HTTP Response Not OK|Typically this occurs when a passed value does not fall within the range of allowed values. For example, this might be a `limit` that does not fall within the `1` to `200` range. |
 	
-##TelephoneNumbersController<a name=telephonecontroller></a>
+##TelephoneNumbersController<a name=telephonecontroller></a> 
+
+Location: **./flowroute-numbers-python/FlowrouteNumbersLib/Controllers**
 
 The TelephoneNumbersController supports all of the methods necessary to purchase a new phone number and to manage your owned phone number inventory. The following shows a sample file named **phonenumbers.py** file that invokes only the TelephoneNumbersController methods:
 
@@ -363,24 +371,22 @@ The TelephoneNumbersController supports all of the methods necessary to purchase
 	billing = BillingMethod(billing_method="VPRI" or "METERED")
  	number = "telephone number"
  	response = tnc.purchase`*`(billing,number)
- 	print (response)
- 	
+  	
  	#List Account Telephone Numbers
  	response = tnc.list_account_telephone_numbers(limit=None,page=None,pattern=None)
- 	print (response)
  	
  	#Telephone Number Details
  	response = tnc.telephone_number_details(number)
- 	print (response)
  	
  	#Update Telephone Number Routes
  	route variable name = [Route(name='primary route'), Route(name='failover route')] 
  	response = tnc.update(number=phoneNumber, routes=route variable name)
+
  	print (response)
 
-Add any of the following TelephoneNumbersController methods after `tnc = TelephoneNumbersController()`, but before `print (response)`. If you do not want to execute a specific method, comment out that method's lines with `#`
+Add any of the following TelephoneNumbersController methods after `tnc = TelephoneNumbersController()`, but before `print (response)`. If you do not want to execute a specific method, comment out that method's lines with `#`.
 
-The Controller supports the following methods:
+The Controller contains the following methods:
 
 *	[`purchase`](#purchasenumber)
 * 	[`list_account_telephone_numbers`](#listnumbers)
@@ -396,16 +402,22 @@ The `purchase` method is used to purchase a telephone number from Flowroute's in
 Add the following lines to your Python file:
 
 	#Purchase a Telephone Number
- 	billing = BillingMethod(billing_method="VPRI" or "METERED")
+ 	billing = BillingMethod(billing_method="")
  	number = "telephone number"
  	response = tnc.purchase(billing,number)
 
-The method takes the following parameters:
+First, define the variable names used in the method: 
+
+|Variable name    |Required  |Type      |Description|
+|-----------------|----------|----------|-------------------------------------------------------| 
+|`billing`      | True     | string   |The variable name assigned to the billing method. An unlimited number of characters can be used. For this example, `billing` is the name of the variable. |
+|`number`        | True     | string   | This variable identifies the phone number to purchase. An unlimited number of characters can be used. For this example, `number` is the name of the variable.|
+
+Next, define the `billing` and `number` variables themselves:
 
 | Parameter       | Required | Data type|Usage                                                                |
 |-----------------|----------|---------|-----------------------------------------------------------------------|
-| `billing`   | True  | string   | Variable that sets the billing the BillingMethod. The variable is then associated with one of two billing methods, `VPRI` or `METERED`. <ul><li>`VPRI` are concurrent calls limited to the number of VPRI channels you have, but with unlimited usage on each channel.<li> `METERED` are unlimited concurrent calls, billed per-minute.</ul>The variable name can be of as many characters as you want, but the name you choose must be used consistently throughout this method. For this example, the variable is named `billing`. |
-| `number` | True     | string |Variable that sets the phone number to purchase. The variable name can be of as many characters as you want, but the name you choose must be used consistently throughout this method. For this example, the variable is named `number`.|                               
+| `billing_method("")`   | True  | string   | Sets the billing method for the purchased telephone number. It must be one of the following: `VPRI` or `METERED`. <ul><li>`VPRI` are concurrent calls limited to the number of VPRI channels you have, but with unlimited usage on each channel.<li> `METERED` are unlimited concurrent calls, billed per-minute.</ul>The variable name can be of as many characters as you want, but the name you choose must be used consistently throughout this method. For this example, the variable is named `billing`. |                           
 | `telephone number`|true| string |Phone number associated with the `number` variable. This number must be from the list of available Flowroute telephone numbers and must be formatted using an E.164, 11-digit `1NPANXXXXXXXXX` format.|
 	
 ##### Example Usage
@@ -448,7 +460,6 @@ The method takes the following parameters:
 	
 	#List Account Telephone Numbers
 	response = tnc.list_account_telephone_numbers(limit=5,page=2,pattern=206)
-
 
 ##### Example response
 	{
@@ -556,16 +567,21 @@ The `update` method is used to update both the primary and failover route for a 
 ##### Usage
 
 	#Update Telephone Number Routes
-	route variable name = [Route(name='primary route'), Route(name='failover route')]
+	rtes = [Route(name='primary route'), Route(name='failover route')]
 	response = tnc.update(number=phoneNumber, routes=route variable name)
 
-The method takes the following parameters:
+First, define the variable name that identifies the array:
+
+| Parameter       | Required | Type |Description |                                                     
+|-----------------|----------|-------|----------------------------------------------------------|
+|`rtes`|True| string| Variable name that identifies the array. This field supports an unlimited number of characters. In this example, `rtes` is used.|
+
+Next, define the variables that compose the array:
 
 | Parameter       | Required | Data type| Usage                                                                  |
 |-----------------|----------|----------|-------------------------------------------------|
-|`route variable name`|True| string| The variable name identifying the array. This field supports an unlimited number of characters. However, the name you assign here must be used consistently throughout the method. For this example, *`rtes`* is the variable name.
-|`name='route name'`|True| string| Name of an existing route. The first `name` in the array is assigned as the primary route; the second `name` in the array is assigned as the secondary, or failover, route. See [`create_new_route`](#createroute) for the steps to create a route. This field supports an unlimited number of characters.
-| `phoneNumber` | True   | string  | The phone number for which to update routes. This must be a Flowroute phone number, and must use an E.164 1NPANXXXXXX format.          |
+|`pimary route/failover route'`|True| string| Name of an existing route. The first `name` in the array is assigned as the primary route; the second `name` in the array is assigned as the secondary, or failover, route. See [`create_new_route`](#createroute) for the steps to create a route.|
+| `phoneNumber` | True   | string  | TThe telephone number on which to update the routes. You must use a Flowroute phone number in an 11-digit, E.164 format: *`1NPANXXXXXX`*.          |
 
 ##### Example usage
 	
@@ -585,7 +601,9 @@ An empty line is returned for a successful update. No other message is returned.
 
 ### InboundRoutesController<a name=inboundcontroller></a>
 
-The InboundRoutesController contains the methods required to create new routes and to view your current routes. Methods are added to a Python file, and then that file run from a command line. The following shows a sample file named **routes.py** file that invokes only the InboundRoutesController methods:
+Location: **./flowroute-numbers-python/FlowrouteNumbersLib/Controllers**
+
+The InboundRoutesController contains the methods required to create new routes and to view your current routes. Methods are added to a Python file, and then that file run from a command line. The following shows a sample file named **routes.py** file, which invokes the Controller's methods:
 
 	from FlowrouteNumbersLib.Controllers.InboundRoutesController import *
 	from FlowrouteNumbersLib.Models import *  
@@ -605,7 +623,7 @@ The InboundRoutesController contains the methods required to create new routes a
 
 TelephoneNumbersController methods are added after `irc = InboundRoutesController()`, but before `print (response)`.  If you do not want to execute a specific method, comment those lines out with `#` 
 
-The Controller supports the following methods:
+The Controller contains the following methods:
 
 *	[`list`](#listroutes)
 *  [`create_new_route`](#createroute)
@@ -620,7 +638,6 @@ Add the following lines to your Python file:
 
 	#List Routes
 	response = irc.list(limit=None, page=None)
-
 
 The method takes the following parameters:
 
@@ -665,7 +682,7 @@ The method takes the following parameters:
 #####Error response
 | Error code | Message  | Description                                                 |
 |------------|----------|-------------------------------------------------------|
-|No error code|HTTP Response Not OK|Typically this occurs when a `limit` does not fall within the allowed range, of `1` to `200` or a negative number; or if `0` or a negative number are passed for the `page`. |	
+|No error code|HTTP Response Not OK|Typically this occurs when a `limit` does not fall within the allowed range of `1` to `200`, or a negative number; or if `0` or a negative number are passed for the `page`. |	
 	
 #### `create_new_route(route_name,mtype,value)`<a name="createroute"></a>
 
@@ -673,15 +690,15 @@ The `create_new_route` method is used to create a new inbound route. An inbound 
 
 #####Usage
 
+	#Create New Routes
 	response = irc.create_new_route(route_name='name',mtype='route type',value='type value')
-	print (response)
 
 The method takes the following parameters:
 
 | Parameter | Required | Data type |Description                                                                                   |
 |-----------|----------|------------|---------------------------------------------------|
 | `name` | True  |string   | The name of the new route. This field supports an unlimited number of alphanumeric characters.  |
-| `route type`      | True   | string | The type of route. Valid options are `HOST`, `PSTN`, and `URI` |
+| `route type`      | True   | string | The type of route. Allowed values are `HOST`, `PSTN`, and `URI` |
 | `type value`     | True    | string | Value of the route, dependent on the `type`: <ul><li>If `HOST`, the value must be an IP address or URL with an optional port number—for example, an IP address could be `24.239.23.40:5060` or a URL could be `myphone.com`. If no port is specified, the server will attempt to use DNS SRV records. <li>If `PSTN`, the value must be formatted as a valid E.164, 11-digit formatted North American phone number—for example,`16476998778`. <li>If `URI`, the value must be formatted as  `protocol:user@domain[:port][;transport=<tcp/udp>`—for example, `sip:alice@atlanta.com`,  `sip:16476998778@215.122.69.152:5060;transport=tcp`, or `sips:securecall@securedserver.com`.</li></ul>|                                        
 
 You can create as many route types as you want, but each must have a unique `name`.
@@ -696,7 +713,9 @@ The following example shows the creation of three new routes:
 	print (response)
 	response = irc.create_new_route(route_name='URIroute1',mtype='URI',value='sip:16476998778@215.122.69.152:5060')
 	print (response)
-	
+
+>**Note**: In the example above, `print (response)` is added after each line. This returns a success or error response for each line.
+
 #####Example response
 
 An empty string (`''`) is returned for each successfully created route; no other code or message is returned. An error encountered for a specific `irc.create_new_route()` line does not prevent the other routes from being created.
