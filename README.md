@@ -580,8 +580,8 @@ Next, define the variables that compose the array:
 
 | Parameter       | Required | Data type| Usage                                                                  |
 |-----------------|----------|----------|-------------------------------------------------|
-|`pimary route/failover route'`|True| string| Name of an existing route. The first `name` in the array is assigned as the primary route; the second `name` in the array is assigned as the secondary, or failover, route. See [`create_new_route`](#createroute) for the steps to create a route.|
-| `phoneNumber` | True   | string  | TThe telephone number on which to update the routes. You must use a Flowroute phone number in an 11-digit, E.164 format: *`1NPANXXXXXX`*.          |
+|`primary route/failover route'`|True| string| Name of an existing route. The first `name` in the array is assigned as the primary route; the second `name` in the array is assigned as the secondary, or failover, route. See [`create_new_route`](#createroute) for the steps to create a route.|
+| `phoneNumber` | True   | string  | The Flowroute telephone number you own on which to update the routes. You must use an 11-digit, E.164 format: *`1NPANXXXXXX`*.          |
 
 ##### Example usage
 	
@@ -603,7 +603,7 @@ An empty line is returned for a successful update. No other message is returned.
 
 Location: **./flowroute-numbers-python/FlowrouteNumbersLib/Controllers**
 
-The InboundRoutesController contains the methods required to create new routes and to view your current routes. Methods are added to a Python file, and then that file run from a command line. The following shows a sample file named **routes.py** file, which invokes the Controller's methods:
+The InboundRoutesController contains the methods required to create new routes and to view your current routes. The following shows a sample file named **routes.py** file, which invokes the Controller's methods:
 
 	from FlowrouteNumbersLib.Controllers.InboundRoutesController import *
 	from FlowrouteNumbersLib.Models import *  
