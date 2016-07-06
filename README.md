@@ -549,7 +549,7 @@ In the following example, details are requested for the telephone number just pu
 
 |Parameter | Description                                         |
 |--------|-------------------------------------------------------|
-| `routes`  | The routes associated with the telephone number; it is composed of the following:
+| `routes`  | The primary and failover routes associated with the telephone number. The first route is the primary route, the second is the failover route. The `routes` are composed of:
 | |	<ul><li>`type`- Indicates the type of route: `HOST`, `PSTN`, `URI`, or `SIP-REG`. `SIP-REG` is the default name assigned to the route if none is assigned. A route `type` can be created using the [`create_new_route`](#createroute) endpoint.</li>
 | |<ul> <li>`name`- Name of the route. If no `name` was given to the route, `sip-reg` is the assigned default name. A `name` is assigned to a route when the route is created.</ul></li>
 |`billing_method`| Either `VPRI` or `METERED`.|
