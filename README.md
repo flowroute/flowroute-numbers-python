@@ -679,6 +679,16 @@ The method takes the following parameters:
      }
 	}
 
+#####Response field descriptions
+
+The following information is returned in the response:
+
+| Parameter |  Description                                                     |
+|-----------|--------------------------------------------------------------------------------|
+| `[route_name]` |  The name of the route assigned using the [`create_new_route`](#createroute) method. It is composed of:<ul> <li>`type` - The type of route created using the `create_new_route ` method. Will be `HOST`, `PSTN`, or `URI`. If no route type was assigned, `SIP-REG` is used as the default. <li>`value` - Value of the route, assigned to the route `type` using the `create_new_route ` method.</ul</li>|
+
+
+
 #####Error response
 | Error code | Message  | Description                                                 |
 |------------|----------|-------------------------------------------------------|
