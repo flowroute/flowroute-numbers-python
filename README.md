@@ -418,7 +418,7 @@ Next, define the `billing` and `number` variables themselves:
 | Parameter       | Required | Data type|Usage                                                                |
 |-----------------|----------|---------|-----------------------------------------------------------------------|
 | `billing_method("")`   | True  | string   | Sets the billing method for the purchased telephone number. It must be one of the following: `VPRI` or `METERED`. <ul><li>`VPRI` are concurrent calls limited to the number of VPRI channels you have, but with unlimited usage on each channel.<li> `METERED` are unlimited concurrent calls, billed per-minute.</ul>The variable name can be of as many characters as you want, but the name you choose must be used consistently throughout this method. For this example, the variable is named `billing`. |                           
-| `telephone number`|true| string |Phone number associated with the `number` variable. This number must be from the list of available Flowroute telephone numbers and must be formatted using an E.164, 11-digit `1NPANXXXXXXXXX` format.|
+| `telephone number`|true| string |Phone number associated with the `number` variable. This number must be from the list of available Flowroute telephone numbers and must be formatted using an E.164, 11-digit `1NPANXXXXXX` format.|
 	
 ##### Example Usage
 
@@ -741,5 +741,5 @@ An empty string (`''`) is returned for each successfully created route; no other
 
 | Error code | Message  | Description                                           |
 |------------|----------|-------------------------------------------------------|
-|Bad request  |`{}`|Typically this occurs when an incorrect number of digits was passed for the telephone number. The number must use E.164, 11-digit `1NPANXXXXXXXXX` format.|
+|Bad request  |`{}`|Typically this occurs when an incorrect number of digits was passed for the telephone number. The number must use E.164, 11-digit `1NPANXXXXXX` format.|
 |No error code|HTTP Response Not OK|Typically this occurs when a `value` is malformed. |
