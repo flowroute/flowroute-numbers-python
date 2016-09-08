@@ -324,7 +324,6 @@ Based on the parameters passed above, the following result is returned:
   	    "state": "WA",
   	    "ratecenter": "SEATTLE",
   	    "billing_methods": [
-  	      "VPRI",
    	     "METERED"
    	   ]
  	   }
@@ -345,7 +344,7 @@ Parameter | Description                                             |
 | | <ul><ul><li>`monthly_cost`- The recurring monthly cost to maintain that telephone number. The default value is USD `1.25`.</ul>|
 ||	`state`- The US State or Canadian province/territory in which the NPA NXX is located.|
 ||	`ratecenter`- The ratecenter associated with the NPA NXX.</ol>|
-||	`billing_methods`- Displays the billing methods available for the telephone number: <ul><li>`VPRI`, or</ul></li> <ul><li>`METERED` </ul></li> |
+||	`billing_methods`- Displays the billing methods for the telephone number. This will only be `METERED`. |
 
 ##### Error response
 
@@ -368,7 +367,7 @@ The TelephoneNumbersController supports all of the methods necessary to purchase
 	tnc = TelephoneNumbersController()
 	
 	#Purchase a Number
-	billing = BillingMethod(billing_method="VPRI" or "METERED")
+	billing = BillingMethod(billing_method="METERED")
  	number = "telephone number"
  	response = tnc.purchase`*`(billing,number)
   	
@@ -417,13 +416,13 @@ Next, define the `billing` and `number` variables themselves:
 
 | Parameter       | Required | Data type|Usage                                                                |
 |-----------------|----------|---------|-----------------------------------------------------------------------|
-| `billing_method("")`   | True  | string   | Sets the billing method for the purchased telephone number. It must be one of the following: `VPRI` or `METERED`. <ul><li>`VPRI` are concurrent calls limited to the number of VPRI channels you have, but with unlimited usage on each channel.<li> `METERED` are unlimited concurrent calls, billed per-minute.</ul>The variable name can be of as many characters as you want, but the name you choose must be used consistently throughout this method. For this example, the variable is named `billing`. |                           
+| `billing_method("")`   | True  | string   |Sets the billing method for the purchased telephone number, which can only be `METERED`.  `METERED` are unlimited concurrent calls, billed per-minute. |                           
 | `telephone number`|true| string |Phone number associated with the `number` variable. This number must be from the list of available Flowroute telephone numbers and must be formatted using an E.164, 11-digit `1NPANXXXXXX` format.|
 	
 ##### Example Usage
 
 	#Purchase a Telephone Number
-	billing = BillingMethod(billing_method="VPRI")
+	billing = BillingMethod(billing_method="METERED")
 	number = "15852003968"
 	response = tnc.purchase(billing,number)
 
@@ -497,7 +496,7 @@ The following fields are returned in the response:
 | |<ul><ul><li>`routes`- Defines the parameters of the route. Composed of the following:</ul>
 | |	<ul><ul><ul><li>`type`- Indicates the type of route: `HOST`, `PSTN`, or `URI`. If no route is assigned, `SIP-REG` is the default name assigned to the route.
 | |<ul> <ul><ul><li>`name`- Name of the route. If no `name` was given to the route, `sip-reg` is the assigned default name.</ul>
-||<ul><li>`billing_method`- Either `VPRI` or `METERED`.
+||<ul><li>`billing_method`- This will only be `METERED`.
 ||<ul><li>`detail`- Provides more detail that can be passed when using the `telephone_number_details` method below. </ul>|
 
 ##### Error response
@@ -552,7 +551,7 @@ In the following example, details are requested for the telephone number just pu
 | `routes`  | The primary and failover routes associated with the telephone number. The first route is the primary route, the second is the failover route. The `routes` are composed of:
 | |	<ul><li>`type`- Indicates the type of route: `HOST`, `PSTN`, `URI`, or `SIP-REG`. `SIP-REG` is the default name assigned to the route if none is assigned. A route `type` can be created using the [`create_new_route`](#createroute) endpoint.</li>
 | |<ul> <li>`name`- Name of the route. If no `name` was given to the route, `sip-reg` is the assigned default name. A `name` is assigned to a route when the route is created.</ul></li>
-|`billing_method`| Either `VPRI` or `METERED`.|
+|`billing_method`| This will only be `METERED`.|
 
 ##### Error response
 
