@@ -9,7 +9,7 @@ Flowroute-numbers-python is a Python API Wrapper that provides methods for inter
 * Update the primary and failover route on a phone number
  
 ### Documentation 
-The full documentation for v2 of the Flowroute API is available [here](https://developer.flowroute.com/v2.0/docs).
+The full documentation for v1 of the Flowroute API is available [here](https://developer.flowroute.com/v1.0/docs).
 
 ##Before you begin
 
