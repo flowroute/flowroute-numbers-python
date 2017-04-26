@@ -9,5 +9,5 @@
 * Update the primary and failover route on a phone number
  
 ### Documentation 
-To work with the SDK, please read and follow the steps [here](http://developer.flowroute.com/libraries/python/#numbers).
+To work with the SDK, please read and follow the steps [here](http://developer.flowroute.com/libraries/python/).
 
