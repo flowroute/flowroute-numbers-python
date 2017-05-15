@@ -81,7 +81,7 @@ class PurchasablePhoneNumbersController(object):
         return response.body
 
     @staticmethod
-    def list_available_np_as(limit=200):
+    def list_available_np_as(limit=200, page=None):
         """Does a GET request to /available-tns/npas/.
 
         Retrieves a list of all NPAs (area codes) that contain purchasable
@@ -89,6 +89,7 @@ class PurchasablePhoneNumbersController(object):
 
         Args:
             limit (int): Number of items to display (Max 200).
+	    page(int): Page to display.
 
         Returns:
             mixed: Response from the API. 
@@ -108,7 +109,8 @@ class PurchasablePhoneNumbersController(object):
 
         # Process optional query parameters
         query_parameters = {
-            "limit": limit
+            "limit": limit,
+	    "page": page
         }
 
         query_builder = APIHelper.append_url_with_query_parameters(query_builder, query_parameters)
